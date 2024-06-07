@@ -32,12 +32,12 @@ public class MemberController {
 
     @PostMapping("/check/availability")
     public ResponseEntity<MemberAvailabilityCheckResponse> checkMemberAvailability(@RequestBody @Valid MemberAvailabilityCheckRequest request) {
-        String memberId = request.loginId();
+        String loginId = request.loginId();
         String email = request.email();
-        boolean isDuplicate = memberService.isMemberIdOrEmailDuplicate(memberId, email);
+        boolean isDuplicate = memberService.isLoginIdOrEmailDuplicate(loginId, email);
         if (isDuplicate) {
-            return convertToBadRequest(new MemberAvailabilityCheckResponse(false, "MemberId or email is already taken"));
+            return convertToBadRequest(new MemberAvailabilityCheckResponse(false, "LoginId or email is already taken"));
         }
-        return convertToSucessResponseEntity(new MemberAvailabilityCheckResponse(true, "MemberId or email are valid"));
+        return convertToSucessResponseEntity(new MemberAvailabilityCheckResponse(true, "LoginId or email are valid"));
     }
 }
