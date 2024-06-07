@@ -6,7 +6,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ResponseConverter {
-    public static <T> ResponseEntity<T> convertToResponseEntity(T response) {
+    public static <T> ResponseEntity<T> convertToSucessResponseEntity(T response) {
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    public static <T> ResponseEntity<T> convertToBadRequest(T response) {
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }
