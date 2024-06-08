@@ -9,4 +9,7 @@ public record MemberDto(
         Byte grade,
         AddressDto addressdto
 ) {
+    public static MemberDto hashPassword(MemberDto dto, String hashedPassword) {
+        return new MemberDto(dto.id, dto.loginId, dto.name, dto.email, hashedPassword, dto.grade, dto.addressdto);
+    }
 }
