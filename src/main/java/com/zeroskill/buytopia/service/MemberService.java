@@ -7,19 +7,24 @@ import com.zeroskill.buytopia.entity.Member;
 import com.zeroskill.buytopia.exception.DuplicateMemberException;
 import com.zeroskill.buytopia.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import static com.zeroskill.buytopia.dto.MemberDto.hashPassword;
 
 @Service
 @RequiredArgsConstructor
 public class MemberService {
+    private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
 
     public MemberRegistrationResponse register(MemberDto memberDto) {
         if(isLoginIdOrEmailDuplicate(memberDto.loginId(), memberDto.email())) {
             throw new DuplicateMemberException("이미 존재하는 회원입니다.");
         }
+        String hashedPassword = passwordEncoder.encode(memberDto.password());
         Address address = Address.toEntity(memberDto.addressdto());
-        Member member = Member.toEntity(memberDto, address);
+        Member member = Member.toEntity(hashPassword(memberDto, hashedPassword), address);
         Member savedMember = memberRepository.save(member);
         return new MemberRegistrationResponse(savedMember);
     }

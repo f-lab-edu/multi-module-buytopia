@@ -10,7 +10,6 @@ import org.hibernate.annotations.ColumnDefault;
 @Entity
 @NoArgsConstructor
 public class Member {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
