@@ -1,5 +1,6 @@
 package com.zeroskill.buytopia.exceptionhandler;
 
+import com.zeroskill.buytopia.exception.DuplicateMemberException;
 import com.zeroskill.buytopia.exception.EmptyFieldException;
 import com.zeroskill.buytopia.exception.InvalidEmailFormatException;
 import com.zeroskill.buytopia.exception.PasswordMismatchException;
@@ -48,6 +49,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidEmailFormatException.class)
     @ResponseBody
     public ResponseEntity<String> handleInvalidEmailFormatException(InvalidEmailFormatException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+    @ResponseStatus
+    @ExceptionHandler(DuplicateMemberException.class)
+    @ResponseBody
+    public ResponseEntity<String> handleDuplicateMemberException(DuplicateMemberException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 }
