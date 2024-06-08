@@ -24,7 +24,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping({"", "/"})
-    public ResponseEntity<MemberRegistrationResponse> register(@RequestBody @Valid MemberRegistrationRequest request) {
+    public ResponseEntity<MemberRegistrationResponse> register(@RequestBody MemberRegistrationRequest request) {
         MemberDto memberDto = MemberRegistrationRequest.toMemberDto(request);
         MemberRegistrationResponse memberRegistrationResponse = memberService.register(memberDto);
         return convertToSucessResponseEntity(memberRegistrationResponse);
