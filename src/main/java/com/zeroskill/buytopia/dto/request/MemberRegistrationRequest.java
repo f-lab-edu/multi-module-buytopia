@@ -2,6 +2,7 @@ package com.zeroskill.buytopia.dto.request;
 
 import com.zeroskill.buytopia.dto.AddressDto;
 import com.zeroskill.buytopia.dto.MemberDto;
+import com.zeroskill.buytopia.entity.Grade;
 import com.zeroskill.buytopia.exception.EmptyFieldException;
 import com.zeroskill.buytopia.exception.ErrorMessage;
 import com.zeroskill.buytopia.exception.InvalidEmailFormatException;
@@ -20,7 +21,7 @@ public record MemberRegistrationRequest (
         AddressDto address
 ) implements FieldValidatable, PasswordValidatable {
     public static MemberDto toMemberDto(MemberRegistrationRequest request) {
-        return new MemberDto(null, request.loginId(), request.name, request.email, request.password, (byte) 1, request.address);
+        return new MemberDto(null, request.loginId(), request.name, request.email, request.password, Grade.SILVER, request.address);
     }
 
     @Override
