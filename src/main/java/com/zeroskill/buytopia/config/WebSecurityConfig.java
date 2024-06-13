@@ -2,7 +2,6 @@ package com.zeroskill.buytopia.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -28,7 +27,7 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> {
-                    requests.requestMatchers("/api/v1/members").permitAll();
+                    requests.requestMatchers("/api/v1/members/**").permitAll();
 //                    requests.requestMatchers(HttpMethod.POST, "/api/articles").authenticated();
                 })
                 .sessionManagement(

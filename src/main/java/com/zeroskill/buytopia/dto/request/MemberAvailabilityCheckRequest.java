@@ -1,14 +1,27 @@
 package com.zeroskill.buytopia.dto.request;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+import com.zeroskill.buytopia.exception.EmptyFieldException;
+import com.zeroskill.buytopia.exception.ErrorMessage;
+import com.zeroskill.buytopia.exception.InvalidEmailFormatException;
+import com.zeroskill.buytopia.validation.FieldValidatable;
+
+import static com.zeroskill.buytopia.util.Util.isValidEmail;
 
 public record MemberAvailabilityCheckRequest(
-        @NotBlank(message = "사용자 아이디는 필수입니다.")
         String loginId,
-
-        @NotBlank(message = "이메일은 필수입니다.")
-        @Email(message = "유효한 이메일 형식이 아닙니다.")
         String email
-) {
+) implements FieldValidatable {
+    @Override
+    public boolean checkEmptyField() {
+        if(loginId == null || loginId.isEmpty()) {
+            throw new EmptyFieldException(ErrorMessage.EMPTY_LOGIN_ID.getMessage());
+        }
+        if(email == null || email.isEmpty()) {
+            throw new EmptyFieldException(ErrorMessage.EMPTY_EMAIL.getMessage());
+        }
+        if (!isValidEmail(email)) {
+            throw new InvalidEmailFormatException(ErrorMessage.INVALID_EMAIL_FORMAT.getMessage());
+        }
+        return true;
+    }
 }
