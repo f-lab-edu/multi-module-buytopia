@@ -5,6 +5,8 @@ import com.zeroskill.buytopia.dto.response.MemberRegistrationResponse;
 import com.zeroskill.buytopia.entity.Address;
 import com.zeroskill.buytopia.entity.Member;
 import com.zeroskill.buytopia.exception.DuplicateMemberException;
+import com.zeroskill.buytopia.exception.ErrorCode;
+import com.zeroskill.buytopia.exception.ErrorMessage;
 import com.zeroskill.buytopia.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +22,7 @@ public class MemberService {
 
     public MemberRegistrationResponse register(MemberDto memberDto) {
         if(isLoginIdOrEmailDuplicate(memberDto.loginId(), memberDto.email())) {
-            throw new DuplicateMemberException("이미 존재하는 회원입니다.");
+            throw new DuplicateMemberException(ErrorCode.MEMBER_DUPLICATE.getCode(), ErrorMessage.MEMBER_DUPLICATE.getMessage());
         }
         String hashedPassword = passwordEncoder.encode(memberDto.password());
         Address address = Address.toEntity(memberDto.addressdto());
