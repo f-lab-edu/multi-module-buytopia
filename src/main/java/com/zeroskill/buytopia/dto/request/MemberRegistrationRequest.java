@@ -3,76 +3,66 @@ package com.zeroskill.buytopia.dto.request;
 import com.zeroskill.buytopia.dto.AddressDto;
 import com.zeroskill.buytopia.dto.MemberDto;
 import com.zeroskill.buytopia.exception.EmptyFieldException;
+import com.zeroskill.buytopia.exception.ErrorMessage;
 import com.zeroskill.buytopia.exception.InvalidEmailFormatException;
 import com.zeroskill.buytopia.exception.PasswordMismatchException;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+import com.zeroskill.buytopia.validation.FieldValidatable;
+import com.zeroskill.buytopia.validation.PasswordValidatable;
 
 import static com.zeroskill.buytopia.util.Util.isValidEmail;
 
-public record MemberRegistrationRequest(
-        @NotBlank(message = "사용자 아이디는 필수입니다.")
+public record MemberRegistrationRequest (
         String loginId,
-
-        @NotBlank(message = "이름은 필수입니다.")
         String name,
-
-        @NotBlank(message = "이메일은 필수입니다.")
-        @Email(message = "유효한 이메일 형식이 아닙니다.")
         String email,
-
-        @NotBlank(message = "비밀번호는 필수입니다.")
         String password,
-
-        @NotBlank(message = "비밀번호 확인은 필수입니다.")
         String passwordConfirm,
-
-        @Valid
         AddressDto address
-) {
-    public MemberRegistrationRequest {
+) implements FieldValidatable, PasswordValidatable {
+    public static MemberDto toMemberDto(MemberRegistrationRequest request) {
+        return new MemberDto(null, request.loginId(), request.name, request.email, request.password, (byte) 1, request.address);
+    }
+
+    @Override
+    public boolean checkEmptyField() {
         if(loginId == null || loginId.isEmpty()) {
-            throw new EmptyFieldException("사용자 아이디는 필수입니다.");
+            throw new EmptyFieldException(ErrorMessage.EMPTY_LOGIN_ID.getMessage());
         }
 
         if(name == null || name.isEmpty()) {
-            throw new EmptyFieldException("이름은 필수입니다.");
+            throw new EmptyFieldException(ErrorMessage.EMPTY_NAME.getMessage());
         }
 
         if(email == null || email.isEmpty()) {
-            throw new EmptyFieldException("이메일은 필수입니다.");
+            throw new EmptyFieldException(ErrorMessage.EMPTY_EMAIL.getMessage());
         }
 
         if (!isValidEmail(email)) {
-            throw new InvalidEmailFormatException("이메일 형식이 유효하지 않습니다.");
+            throw new InvalidEmailFormatException(ErrorMessage.INVALID_EMAIL_FORMAT.getMessage());
         }
 
         if(password == null || password.isEmpty()) {
-            throw new EmptyFieldException("비밀번호는 필수입니다.");
+            throw new EmptyFieldException(ErrorMessage.EMPTY_PASSWORD.getMessage());
         }
 
         if(passwordConfirm == null || passwordConfirm.isEmpty()) {
-            throw new EmptyFieldException("비밀번호 확인은 필수입니다.");
+            throw new EmptyFieldException(ErrorMessage.EMPTY_PASSWORD_CONFIRM.getMessage());
         }
 
         if (address == null ||
                 address.mainAddress().isEmpty() ||
                 address.subAddress().isEmpty() ||
                 address.zipcode().isEmpty()) {
-            throw new EmptyFieldException("주소 정보중 빈값이 있습니다.");
+            throw new EmptyFieldException(ErrorMessage.EMPTY_ADDRESS.getMessage());
         }
-
-        if (!password.equals(passwordConfirm)) {
-            throw new PasswordMismatchException("비밀번호 확인이 일치하지 않습니다.");
-        }
+        return true;
     }
 
-    public static MemberDto toMemberDto(MemberRegistrationRequest request) {
-        return new MemberDto(null, request.loginId(), request.name, request.email, request.password, (byte) 1, request.address);
-    }
-
-    public boolean arePasswordsMatching() {
-        return password.equals(passwordConfirm);
+    @Override
+    public boolean checkPasswordMatch() {
+        if(!password.equals(passwordConfirm)) {
+            throw new PasswordMismatchException(ErrorMessage.PASSWORD_MISS_MATCH.getMessage());
+        }
+        return true;
     }
 }
