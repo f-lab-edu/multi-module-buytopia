@@ -37,8 +37,8 @@ public class MemberService {
         return memberRepository.findByEmail(email).isPresent();
     }
 
-    public boolean isLoginIdOrEmailDuplicate(String loginId, String email) {
-        return isLoginIdDuplicate(loginId) || isEmailDuplicate(email);
+    public boolean isMemberIdOrEmailDuplicate(String memberId, String email) {
+        return isLoginIdDuplicate(memberId) || isEmailDuplicate(email);
     }
 }
 
