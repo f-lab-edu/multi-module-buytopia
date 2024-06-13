@@ -1,9 +1,11 @@
 package com.zeroskill.buytopia.exceptionhandler;
 
+import com.zeroskill.buytopia.converter.ResponseConverter;
+import com.zeroskill.buytopia.dto.response.ApiResponse;
 import com.zeroskill.buytopia.exception.DuplicateMemberException;
 import com.zeroskill.buytopia.exception.EmptyFieldException;
 import com.zeroskill.buytopia.exception.InvalidEmailFormatException;
-import com.zeroskill.buytopia.exception.PasswordMismatchException;
+import com.zeroskill.buytopia.exception.PasswordMissMatchException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -31,31 +33,27 @@ public class GlobalExceptionHandler {
         return errors;
     }
 
-    @ResponseStatus
-    @ExceptionHandler(PasswordMismatchException.class)
+    @ExceptionHandler(PasswordMissMatchException.class)
     @ResponseBody
-    public ResponseEntity<String> handlePasswordMismatchException(PasswordMismatchException e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
+    public <T> ResponseEntity<ApiResponse<T>> handlePasswordMismatchException(PasswordMissMatchException e) {
+        return ResponseConverter.convertToBadRequest(e.getCode(), e.getMessage());
     }
 
-    @ResponseStatus
     @ExceptionHandler(EmptyFieldException.class)
     @ResponseBody
-    public ResponseEntity<String> handleEmptyFieldException(EmptyFieldException e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
+    public <T> ResponseEntity<ApiResponse<T>> handleEmptyFieldException(EmptyFieldException e) {
+        return ResponseConverter.convertToBadRequest(e.getCode(), e.getMessage());
     }
 
-    @ResponseStatus
     @ExceptionHandler(InvalidEmailFormatException.class)
     @ResponseBody
-    public ResponseEntity<String> handleInvalidEmailFormatException(InvalidEmailFormatException e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
+    public <T> ResponseEntity<ApiResponse<T>> handleInvalidEmailFormatException(InvalidEmailFormatException e) {
+        return ResponseConverter.convertToBadRequest(e.getCode(), e.getMessage());
     }
 
-    @ResponseStatus
     @ExceptionHandler(DuplicateMemberException.class)
     @ResponseBody
-    public ResponseEntity<String> handleDuplicateMemberException(DuplicateMemberException e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
+    public <T> ResponseEntity<ApiResponse<T>> handleDuplicateMemberException(DuplicateMemberException e) {
+        return ResponseConverter.convertToBadRequest(e.getCode(), e.getMessage());
     }
 }
