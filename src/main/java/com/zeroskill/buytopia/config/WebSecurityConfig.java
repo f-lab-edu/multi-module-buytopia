@@ -27,7 +27,12 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> {
-                    requests.requestMatchers("/api/v1/members/**").permitAll();
+                    requests.requestMatchers(
+                            "/api/v1/members/**",
+                            "/v3/api-docs/**",
+                            "/swagger-ui/**",
+                            "/swagger-ui.html"
+                    ).permitAll();
 //                    requests.requestMatchers(HttpMethod.POST, "/api/articles").authenticated();
                 })
                 .sessionManagement(
