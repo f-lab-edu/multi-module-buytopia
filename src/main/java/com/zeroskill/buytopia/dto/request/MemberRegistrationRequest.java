@@ -24,34 +24,34 @@ public record MemberRegistrationRequest(
     @Override
     public boolean checkEmptyField() {
         if (loginId == null || loginId.isEmpty()) {
-            throw new EmptyFieldException(ErrorCode.EMPTY_FIELD.getCode(), ErrorMessage.EMPTY_LOGIN_ID.getMessage());
+            throw new EmptyFieldException(ErrorType.EMPTY_FIELD_CD.getData());
         }
 
         if (name == null || name.isEmpty()) {
-            throw new EmptyFieldException(ErrorCode.EMPTY_FIELD.getCode(), ErrorMessage.EMPTY_NAME.getMessage());
+            throw new EmptyFieldException(ErrorType.EMPTY_FIELD_CD.getData());
         }
 
         if (email == null || email.isEmpty()) {
-            throw new EmptyFieldException(ErrorCode.EMPTY_FIELD.getCode(), ErrorMessage.EMPTY_EMAIL.getMessage());
+            throw new EmptyFieldException(ErrorType.EMPTY_FIELD_CD.getData());
         }
 
         if (!isValidEmail(email)) {
-            throw new InvalidEmailFormatException(ErrorCode.INVALID_EMAIL_FORMAT.getCode(), ErrorMessage.INVALID_EMAIL_FORMAT.getMessage());
+            throw new InvalidEmailFormatException(ErrorType.INVALID_EMAIL_FORMAT_CD.getData());
         }
 
         if (password == null || password.isEmpty()) {
-            throw new EmptyFieldException(ErrorCode.EMPTY_FIELD.getCode(), ErrorMessage.EMPTY_PASSWORD.getMessage());
+            throw new EmptyFieldException(ErrorType.EMPTY_FIELD_CD.getData());
         }
 
         if (passwordConfirm == null || passwordConfirm.isEmpty()) {
-            throw new EmptyFieldException(ErrorCode.EMPTY_FIELD.getCode(), ErrorMessage.EMPTY_PASSWORD_CONFIRM.getMessage());
+            throw new EmptyFieldException(ErrorType.EMPTY_FIELD_CD.getData());
         }
 
         if (address == null ||
                 address.mainAddress().isEmpty() ||
                 address.subAddress().isEmpty() ||
                 address.zipcode().isEmpty()) {
-            throw new EmptyFieldException(ErrorCode.EMPTY_FIELD.getCode(), ErrorMessage.EMPTY_ADDRESS.getMessage());
+            throw new EmptyFieldException(ErrorType.EMPTY_FIELD_CD.getData());
         }
         return true;
     }
@@ -59,7 +59,7 @@ public record MemberRegistrationRequest(
     @Override
     public boolean checkPasswordMatch() {
         if (!password.equals(passwordConfirm)) {
-            throw new PasswordMissMatchException(ErrorCode.PASSWORD_MISS_MATCH.getCode(), ErrorMessage.PASSWORD_MISS_MATCH.getMessage());
+            throw new PasswordMissMatchException(ErrorType.PASSWORD_MISS_MATCH_CD.getData());
         }
         return true;
     }

@@ -1,8 +1,7 @@
 package com.zeroskill.buytopia.dto.request;
 
 import com.zeroskill.buytopia.exception.EmptyFieldException;
-import com.zeroskill.buytopia.exception.ErrorCode;
-import com.zeroskill.buytopia.exception.ErrorMessage;
+import com.zeroskill.buytopia.exception.ErrorType;
 import com.zeroskill.buytopia.exception.InvalidEmailFormatException;
 import com.zeroskill.buytopia.validation.FieldValidatable;
 
@@ -15,13 +14,13 @@ public record MemberAvailabilityCheckRequest(
     @Override
     public boolean checkEmptyField() {
         if (loginId == null || loginId.isEmpty()) {
-            throw new EmptyFieldException(ErrorCode.EMPTY_FIELD.getCode(), ErrorMessage.EMPTY_LOGIN_ID.getMessage());
+            throw new EmptyFieldException(ErrorType.EMPTY_FIELD_CD.getData());
         }
         if (email == null || email.isEmpty()) {
-            throw new EmptyFieldException(ErrorCode.EMPTY_FIELD.getCode(), ErrorMessage.EMPTY_EMAIL.getMessage());
+            throw new EmptyFieldException(ErrorType.EMPTY_FIELD_CD.getData());
         }
         if (!isValidEmail(email)) {
-            throw new InvalidEmailFormatException(ErrorCode.INVALID_EMAIL_FORMAT.getCode(), ErrorMessage.INVALID_EMAIL_FORMAT.getMessage());
+            throw new InvalidEmailFormatException(ErrorType.INVALID_EMAIL_FORMAT_CD.getData());
         }
         return true;
     }

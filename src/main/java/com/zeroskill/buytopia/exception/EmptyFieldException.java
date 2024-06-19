@@ -4,8 +4,8 @@ import lombok.Getter;
 
 @Getter
 public class EmptyFieldException extends RuntimeException {
-    public EmptyFieldException(String code, String message) {
-        super(message);
+    public EmptyFieldException(String code) {
+        super(ErrorType.EMPTY_FIELD_MSG.getData());
         this.code = code;
     }
 
