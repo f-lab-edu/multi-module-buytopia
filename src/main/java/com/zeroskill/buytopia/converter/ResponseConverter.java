@@ -7,10 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ResponseConverter {
-    public static <T> ResponseEntity<ApiResponse<T>> convertToSuccessResponseEntity(T response) {
-        ApiResponse<T> apiResponse = new ApiResponse<>(null, null, response);
-        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
-    }
 
     public static <T> ResponseEntity<ApiResponse<T>> convertToBadRequest(String errorCode, String errorMessage) {
         ApiResponse<T> apiResponse = new ApiResponse<>(errorCode, errorMessage, null);

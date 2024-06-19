@@ -4,8 +4,8 @@ import lombok.Getter;
 
 @Getter
 public class InvalidEmailFormatException extends RuntimeException {
-    public InvalidEmailFormatException(String code, String message) {
-        super(message);
+    public InvalidEmailFormatException(String code) {
+        super(ErrorType.INVALID_EMAIL_FORMAT_MSG.getData());
         this.code = code;
     }
 
