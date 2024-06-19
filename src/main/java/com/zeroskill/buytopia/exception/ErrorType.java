@@ -1,19 +1,22 @@
 package com.zeroskill.buytopia.exception;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-public enum ErrorCode {
-    EMPTY_FIELD("V-01"),
-    INVALID_EMAIL_FORMAT("V-02"),
-    PASSWORD_MISS_MATCH("V-03"),
-    MEMBER_DUPLICATE("D-01");
+@AllArgsConstructor
+public enum ErrorType {
+    EMPTY_FIELD_CD("V-01"),
+    INVALID_EMAIL_FORMAT_CD("V-02"),
+    PASSWORD_MISS_MATCH_CD("V-03"),
+    DUPLICATE_ENTITY_CD("D-01"),
 
-    private final String code;
+    EMPTY_FIELD_MSG("빈 필드가 존재합니다."),
+    INVALID_EMAIL_FORMAT_MSG("이메일 형식이 유효하지 않습니다."),
+    PASSWORD_MISS_MATCH_MSG("비밀번호 확인이 일치하지 않습니다"),
+    DUPLICATE_ENTITY_MSG("이미 존재하는 데이터입니다");
 
-    ErrorCode(String code) {
-        this.code = code;
-    }
+    private final String data;
 }
 
 //V-01: 필드가 비어 있음 (Empty Field)
