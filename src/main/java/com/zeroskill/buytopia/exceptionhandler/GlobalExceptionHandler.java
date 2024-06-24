@@ -1,7 +1,7 @@
 package com.zeroskill.buytopia.exceptionhandler;
 
 import com.zeroskill.buytopia.dto.response.ApiResponse;
-import com.zeroskill.buytopia.exception.DuplicateEntityException;
+import com.zeroskill.buytopia.exception.DataNotFoundException;
 import com.zeroskill.buytopia.exception.EmptyFieldException;
 import com.zeroskill.buytopia.exception.InvalidEmailFormatException;
 import com.zeroskill.buytopia.exception.PasswordMissMatchException;
@@ -35,10 +35,10 @@ public class GlobalExceptionHandler {
         return ApiResponse.of(e.getCode(), e.getMessage());
     }
 
-    @ExceptionHandler(DuplicateEntityException.class)
+    @ExceptionHandler(DataNotFoundException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public <T> ApiResponse<T> handleDuplicateEntityException(DuplicateEntityException e) {
+    public <T> ApiResponse<T> handleDuplicateEntityException(DataNotFoundException e) {
         return ApiResponse.of(e.getCode(), e.getMessage());
     }
 }
