@@ -10,11 +10,13 @@ public enum ErrorType {
     INVALID_EMAIL_FORMAT_CD("V-02"),
     PASSWORD_MISS_MATCH_CD("V-03"),
     DUPLICATE_ENTITY_CD("D-01"),
+    DATA_NOT_FOUND_CD("D-02"),
 
     EMPTY_FIELD_MSG("빈 필드가 존재합니다."),
     INVALID_EMAIL_FORMAT_MSG("이메일 형식이 유효하지 않습니다."),
-    PASSWORD_MISS_MATCH_MSG("비밀번호 확인이 일치하지 않습니다"),
-    DUPLICATE_ENTITY_MSG("이미 존재하는 데이터입니다");
+    PASSWORD_MISS_MATCH_MSG("비밀번호 확인이 일치하지 않습니다."),
+    DUPLICATE_ENTITY_MSG("이미 존재하는 데이터입니다."),
+    DATA_NOT_FOUND_MSG("존재하지 않는 데이터입니다.");
 
     private final String data;
 }

@@ -6,7 +6,7 @@ import com.zeroskill.buytopia.dto.request.MemberRegistrationRequest;
 import com.zeroskill.buytopia.dto.response.ApiResponse;
 import com.zeroskill.buytopia.dto.response.MemberAvailabilityCheckResponse;
 import com.zeroskill.buytopia.dto.response.MemberRegistrationResponse;
-import com.zeroskill.buytopia.exception.DuplicateEntityException;
+import com.zeroskill.buytopia.exception.DataNotFoundException;
 import com.zeroskill.buytopia.exception.ErrorType;
 import com.zeroskill.buytopia.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,7 @@ public class MemberController {
         String email = request.email();
         boolean isDuplicate = memberService.isLoginIdOrEmailDuplicate(loginId, email);
         if (isDuplicate) {
-            throw new DuplicateEntityException(ErrorType.DUPLICATE_ENTITY_CD.getData());
+            throw new DataNotFoundException(ErrorType.DUPLICATE_ENTITY_CD.getData());
         }
         return ApiResponse.of(new MemberAvailabilityCheckResponse(true));
     }
