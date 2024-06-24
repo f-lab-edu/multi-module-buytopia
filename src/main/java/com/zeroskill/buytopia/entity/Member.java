@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.List;
+
 @Getter
 @Entity
 @NoArgsConstructor
@@ -33,6 +35,10 @@ public class Member {
 
     @Embedded
     private Address address;
+
+    @OneToMany(mappedBy = "member")
+    private List<MemberTerm> memberTerms;
+
 
     public Member(String loginId, String name, String email, String password, Address address) {
         this.loginId = loginId;
