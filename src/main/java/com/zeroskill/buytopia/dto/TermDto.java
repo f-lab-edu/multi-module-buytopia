@@ -2,13 +2,13 @@ package com.zeroskill.buytopia.dto;
 
 import com.zeroskill.buytopia.entity.Term;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public record TermDto(
         Long id,
         String title,
         String version,
-        LocalDate createdDate,
+        LocalDateTime createdDate,
         String content,
         String isActive
 ) {

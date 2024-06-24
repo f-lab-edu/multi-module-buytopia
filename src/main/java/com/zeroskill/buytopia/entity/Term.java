@@ -3,7 +3,7 @@ package com.zeroskill.buytopia.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -15,7 +15,7 @@ public class Term {
     private Long id;
     private String title;
     private String version;
-    private LocalDate createdDate;
+    private LocalDateTime createdDate;
     private String content;
     private String isActive;
 

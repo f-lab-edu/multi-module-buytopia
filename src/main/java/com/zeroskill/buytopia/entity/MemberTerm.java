@@ -1,9 +1,11 @@
 package com.zeroskill.buytopia.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+@Getter
 @Entity
 public class MemberTerm {
 
@@ -20,5 +22,12 @@ public class MemberTerm {
     private Term term;
 
     private boolean agreed;
-    private LocalDate agreedDate;
+    private final LocalDateTime agreedDate;
+
+    public MemberTerm(Member member, Term term) {
+        this.member = member;
+        this.term = term;
+        this.agreed = true;
+        this.agreedDate = LocalDateTime.now();
+    }
 }
