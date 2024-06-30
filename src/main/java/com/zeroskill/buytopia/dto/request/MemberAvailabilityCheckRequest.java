@@ -1,16 +1,16 @@
 package com.zeroskill.buytopia.dto.request;
 
 import com.zeroskill.buytopia.exception.ErrorType;
-import com.zeroskill.buytopia.validation.FieldValidatable;
+import com.zeroskill.buytopia.validation.Check;
 
 import static com.zeroskill.buytopia.util.Util.isValidEmail;
 
 public record MemberAvailabilityCheckRequest(
         String loginId,
         String email
-) implements FieldValidatable {
+) implements Check {
     @Override
-    public boolean checkEmptyField() {
+    public boolean check() {
         if (loginId == null || loginId.isEmpty()) {
             throw ErrorType.EMPTY_FIELD.exception();
         }

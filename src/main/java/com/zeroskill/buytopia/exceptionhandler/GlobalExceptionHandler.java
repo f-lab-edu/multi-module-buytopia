@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    // TODO: ResponseEntity 변환
-
     @ExceptionHandler(BuytopiaException.class)
     @ResponseBody
     public <T> ResponseEntity<ApiResponse<T>> handleBuytopiaException(BuytopiaException e) {

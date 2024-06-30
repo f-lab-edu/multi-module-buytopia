@@ -4,8 +4,7 @@ import com.zeroskill.buytopia.dto.AddressDto;
 import com.zeroskill.buytopia.dto.MemberDto;
 import com.zeroskill.buytopia.entity.Grade;
 import com.zeroskill.buytopia.exception.*;
-import com.zeroskill.buytopia.validation.FieldValidatable;
-import com.zeroskill.buytopia.validation.PasswordValidatable;
+import com.zeroskill.buytopia.validation.Check;
 
 import static com.zeroskill.buytopia.util.Util.isValidEmail;
 
@@ -16,13 +15,13 @@ public record MemberRegistrationRequest(
         String password,
         String passwordConfirm,
         AddressDto address
-) implements FieldValidatable, PasswordValidatable {
+) implements Check {
     public static MemberDto toMemberDto(MemberRegistrationRequest request) {
         return new MemberDto(null, request.loginId(), request.name, request.email, request.password, Grade.SILVER, request.address);
     }
 
     @Override
-    public boolean checkEmptyField() {
+    public boolean check() {
         if (loginId == null || loginId.isEmpty()) {
             throw ErrorType.EMPTY_FIELD.exception();
         }
@@ -53,15 +52,11 @@ public record MemberRegistrationRequest(
                 address.zipcode().isEmpty()) {
             throw ErrorType.EMPTY_FIELD.exception();
         }
-        return true;
-    }
 
-    @Override
-    // TODO: check interface 구현
-    public boolean checkPasswordMatch() {
         if (!password.equals(passwordConfirm)) {
             throw ErrorType.PASSWORD_MISS_MATCH.exception();
         }
+
         return true;
     }
 }

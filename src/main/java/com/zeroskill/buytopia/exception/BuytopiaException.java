@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatusCode;
 
 @Getter
 public class BuytopiaException extends RuntimeException {
-    // TODO: BuytopiaException으로 변경
     public BuytopiaException(String code, String msg, HttpStatusCode httpStatusCode) {
         super(msg);
         this.code = code;

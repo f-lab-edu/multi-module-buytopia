@@ -21,14 +21,14 @@ public class TermController {
     @GetMapping("/")
     public ApiResponse<List<TermDto>> getTermsByIds(@RequestBody GetTermsByTermIdsRequest request) {
         // TODO: 가장 최신의 액티브인 버전
-        request.checkEmptyField();
+        request.check();
         List<TermDto> termDtos = termService.getTermsByIds(request.termIds());
         return ApiResponse.of(termDtos);
     }
 
     @PostMapping("/agree")
     public ApiResponse<List<AgreementDto>> agreeToTerms(@RequestBody AgreeToTermsRequest request) {
-        request.checkEmptyField();
+        request.check();
         List<AgreementDto> agreementDtos = termService.agree(request.loginId(), request.termIds());
         return ApiResponse.of(agreementDtos);
     }
