@@ -1,6 +1,6 @@
 package com.zeroskill.buytopia.controller;
 
-import com.zeroskill.buytopia.dto.MemberTermDto;
+import com.zeroskill.buytopia.dto.AgreementDto;
 import com.zeroskill.buytopia.dto.TermDto;
 import com.zeroskill.buytopia.dto.request.AgreeToTermsRequest;
 import com.zeroskill.buytopia.dto.request.GetTermsByTermIdsRequest;
@@ -20,15 +20,16 @@ public class TermController {
 
     @GetMapping("/")
     public ApiResponse<List<TermDto>> getTermsByIds(@RequestBody GetTermsByTermIdsRequest request) {
+        // TODO: 가장 최신의 액티브인 버전
         request.checkEmptyField();
         List<TermDto> termDtos = termService.getTermsByIds(request.termIds());
         return ApiResponse.of(termDtos);
     }
 
     @PostMapping("/agree")
-    public ApiResponse<List<MemberTermDto>> agreeToTerms(@RequestBody AgreeToTermsRequest request) {
+    public ApiResponse<List<AgreementDto>> agreeToTerms(@RequestBody AgreeToTermsRequest request) {
         request.checkEmptyField();
-        List<MemberTermDto> memberTermDtos = termService.agree(request.loginId(), request.termIds());
-        return ApiResponse.of(memberTermDtos);
+        List<AgreementDto> agreementDtos = termService.agree(request.loginId(), request.termIds());
+        return ApiResponse.of(agreementDtos);
     }
 }

@@ -1,14 +1,13 @@
 package com.zeroskill.buytopia.service;
 
-import com.zeroskill.buytopia.dto.MemberTermDto;
+import com.zeroskill.buytopia.dto.AgreementDto;
 import com.zeroskill.buytopia.dto.TermDto;
+import com.zeroskill.buytopia.entity.Agreement;
 import com.zeroskill.buytopia.entity.Member;
-import com.zeroskill.buytopia.entity.MemberTerm;
 import com.zeroskill.buytopia.entity.Term;
-import com.zeroskill.buytopia.exception.DataNotFoundException;
 import com.zeroskill.buytopia.exception.ErrorType;
 import com.zeroskill.buytopia.repository.MemberRepository;
-import com.zeroskill.buytopia.repository.MemberTermRepository;
+import com.zeroskill.buytopia.repository.AgreementRepository;
 import com.zeroskill.buytopia.repository.TermRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ import java.util.List;
 public class TermService {
     private final MemberRepository memberRepository;
     private final TermRepository termRepository;
-    private final MemberTermRepository memberTermRepository;
+    private final AgreementRepository agreementRepository;
 
     public List<TermDto> getTermsByIds(List<Long> termIds) {
         List<Term> terms = termRepository.findAllById(termIds);
@@ -29,16 +28,17 @@ public class TermService {
                 .toList();
     }
 
-    public List<MemberTermDto> agree(String loginId, List<Long> termIds) {
-        Member member = memberRepository.findByLoginId(loginId).orElseThrow(() -> new DataNotFoundException(ErrorType.DATA_NOT_FOUND_CD.getData()));
+    public List<AgreementDto> agree(String loginId, List<Long> termIds) {
+        // TODO: 필수약관 들어갔는지 체크(required)
+        Member member = memberRepository.findByLoginId(loginId).orElseThrow(ErrorType.DATA_NOT_FOUND::exception);
         List<Term> terms = termRepository.findAllById(termIds);
-        List<MemberTerm> memberTerms = terms.stream()
-                .map(term -> new MemberTerm(member, term))
+        List<Agreement> agreements = terms.stream()
+                .map(term -> new com.zeroskill.buytopia.entity.Agreement(member, term))
                 .toList();
 
-        List<MemberTerm> savedMemberTerms = memberTermRepository.saveAll(memberTerms);
-        return savedMemberTerms.stream()
-                .map(MemberTermDto::of)
+        List<Agreement> savedAgreements = agreementRepository.saveAll(agreements);
+        return savedAgreements.stream()
+                .map(AgreementDto::of)
                 .toList();
     }
 }

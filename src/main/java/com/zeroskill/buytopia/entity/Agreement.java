@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Entity
-public class MemberTerm {
+public class Agreement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,7 @@ public class MemberTerm {
     private boolean agreed;
     private final LocalDateTime agreedDate;
 
-    public MemberTerm(Member member, Term term) {
+    public Agreement(Member member, Term term) {
         this.member = member;
         this.term = term;
         this.agreed = true;
