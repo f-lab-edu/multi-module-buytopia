@@ -1,6 +1,5 @@
 package com.zeroskill.buytopia.dto.request;
 
-import com.zeroskill.buytopia.exception.EmptyFieldException;
 import com.zeroskill.buytopia.exception.ErrorType;
 import com.zeroskill.buytopia.validation.FieldValidatable;
 
@@ -13,10 +12,10 @@ public record AgreeToTermsRequest(
     @Override
     public boolean checkEmptyField() {
         if(loginId == null || loginId.isEmpty()) {
-            throw new EmptyFieldException(ErrorType.EMPTY_FIELD_CD.getData());
+            throw ErrorType.EMPTY_FIELD.exception();
         }
         if (termIds == null || termIds.isEmpty()) {
-            throw new EmptyFieldException(ErrorType.EMPTY_FIELD_CD.getData());
+            throw ErrorType.EMPTY_FIELD.exception();
         }
         return true;
     }

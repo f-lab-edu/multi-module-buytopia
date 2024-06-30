@@ -24,42 +24,43 @@ public record MemberRegistrationRequest(
     @Override
     public boolean checkEmptyField() {
         if (loginId == null || loginId.isEmpty()) {
-            throw new EmptyFieldException(ErrorType.EMPTY_FIELD_CD.getData());
+            throw ErrorType.EMPTY_FIELD.exception();
         }
 
         if (name == null || name.isEmpty()) {
-            throw new EmptyFieldException(ErrorType.EMPTY_FIELD_CD.getData());
+            throw ErrorType.EMPTY_FIELD.exception();
         }
 
         if (email == null || email.isEmpty()) {
-            throw new EmptyFieldException(ErrorType.EMPTY_FIELD_CD.getData());
+            throw ErrorType.EMPTY_FIELD.exception();
         }
 
         if (!isValidEmail(email)) {
-            throw new InvalidEmailFormatException(ErrorType.INVALID_EMAIL_FORMAT_CD.getData());
+            throw ErrorType.INVALID_EMAIL_FORMAT.exception();
         }
 
         if (password == null || password.isEmpty()) {
-            throw new EmptyFieldException(ErrorType.EMPTY_FIELD_CD.getData());
+            throw ErrorType.EMPTY_FIELD.exception();
         }
 
         if (passwordConfirm == null || passwordConfirm.isEmpty()) {
-            throw new EmptyFieldException(ErrorType.EMPTY_FIELD_CD.getData());
+            throw ErrorType.EMPTY_FIELD.exception();
         }
 
         if (address == null ||
                 address.mainAddress().isEmpty() ||
                 address.subAddress().isEmpty() ||
                 address.zipcode().isEmpty()) {
-            throw new EmptyFieldException(ErrorType.EMPTY_FIELD_CD.getData());
+            throw ErrorType.EMPTY_FIELD.exception();
         }
         return true;
     }
 
     @Override
+    // TODO: check interface 구현
     public boolean checkPasswordMatch() {
         if (!password.equals(passwordConfirm)) {
-            throw new PasswordMissMatchException(ErrorType.PASSWORD_MISS_MATCH_CD.getData());
+            throw ErrorType.PASSWORD_MISS_MATCH.exception();
         }
         return true;
     }

@@ -2,23 +2,25 @@ package com.zeroskill.buytopia.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 
 @Getter
 @AllArgsConstructor
 public enum ErrorType {
-    EMPTY_FIELD_CD("V-01"),
-    INVALID_EMAIL_FORMAT_CD("V-02"),
-    PASSWORD_MISS_MATCH_CD("V-03"),
-    DUPLICATE_ENTITY_CD("D-01"),
-    DATA_NOT_FOUND_CD("D-02"),
+    EMPTY_FIELD("V-01", "빈 필드가 존재합니다.", HttpStatusCode.valueOf(400)),
+    INVALID_EMAIL_FORMAT("V-02", "이메일 형식이 유효하지 않습니다.", HttpStatusCode.valueOf(400)),
+    PASSWORD_MISS_MATCH("V-03", "비밀번호 확인이 일치하지 않습니다.", HttpStatusCode.valueOf(400)),
+    DUPLICATE_ENTITY("D-01", "이미 존재하는 데이터입니다.", HttpStatusCode.valueOf(400)),
+    DATA_NOT_FOUND("D-02", "존재하지 않는 데이터입니다.", HttpStatusCode.valueOf(404));
 
-    EMPTY_FIELD_MSG("빈 필드가 존재합니다."),
-    INVALID_EMAIL_FORMAT_MSG("이메일 형식이 유효하지 않습니다."),
-    PASSWORD_MISS_MATCH_MSG("비밀번호 확인이 일치하지 않습니다."),
-    DUPLICATE_ENTITY_MSG("이미 존재하는 데이터입니다."),
-    DATA_NOT_FOUND_MSG("존재하지 않는 데이터입니다.");
+    private final String code;
+    private final String msg;
+    private final HttpStatusCode httpStatusCode;
 
-    private final String data;
+    public BuytopiaException exception() {
+        return new BuytopiaException(code, msg, httpStatusCode);
+    }
 }
 
 //V-01: 필드가 비어 있음 (Empty Field)

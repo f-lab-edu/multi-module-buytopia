@@ -4,7 +4,7 @@ import com.zeroskill.buytopia.dto.MemberDto;
 import com.zeroskill.buytopia.dto.response.MemberRegistrationResponse;
 import com.zeroskill.buytopia.entity.Address;
 import com.zeroskill.buytopia.entity.Member;
-import com.zeroskill.buytopia.exception.DataNotFoundException;
+import com.zeroskill.buytopia.exception.BuytopiaException;
 import com.zeroskill.buytopia.exception.ErrorType;
 import com.zeroskill.buytopia.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class MemberService {
 
     public MemberRegistrationResponse register(MemberDto memberDto) {
         if(isLoginIdOrEmailDuplicate(memberDto.loginId(), memberDto.email())) {
-            throw new DataNotFoundException(ErrorType.DUPLICATE_ENTITY_CD.getData());
+            throw ErrorType.DUPLICATE_ENTITY.exception();
         }
         String hashedPassword = passwordEncoder.encode(memberDto.password());
         Address address = Address.toEntity(memberDto.addressdto());
