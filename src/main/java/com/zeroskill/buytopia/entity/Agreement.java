@@ -18,7 +18,10 @@ public class Agreement {
     private Member member;
 
     @ManyToOne
-    @JoinColumn(name = "term_id")
+    @JoinColumns({
+            @JoinColumn(name = "term_title", referencedColumnName = "title"),
+            @JoinColumn(name = "term_version", referencedColumnName = "version")
+    })
     private Term term;
 
     private boolean agreed;

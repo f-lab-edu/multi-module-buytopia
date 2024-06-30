@@ -5,7 +5,6 @@ import com.zeroskill.buytopia.entity.Term;
 import java.time.LocalDateTime;
 
 public record TermDto(
-        Long id,
         String title,
         String version,
         LocalDateTime createdDate,
@@ -13,6 +12,6 @@ public record TermDto(
         String isActive
 ) {
     public static TermDto of(Term term) {
-        return new TermDto(term.getId(), term.getTitle(), term.getVersion(), term.getCreatedDate(), term.getContent(), term.getIsActive());
+        return new TermDto(term.getTitle(), term.getVersion(), term.getCreatedDate(), term.getContent(), term.getIsActive());
     }
 }

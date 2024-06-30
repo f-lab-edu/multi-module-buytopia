@@ -3,7 +3,6 @@ package com.zeroskill.buytopia.dto;
 import java.time.LocalDateTime;
 
 public record AgreementDto(
-        Long id,
         Long memberId,
         Long termId,
         boolean agreed,
@@ -13,7 +12,6 @@ public record AgreementDto(
         return new AgreementDto(
                 agreement.getId(),
                 agreement.getMember().getId(),
-                agreement.getTerm().getId(),
                 agreement.isAgreed(),
                 agreement.getAgreedDate()
         );

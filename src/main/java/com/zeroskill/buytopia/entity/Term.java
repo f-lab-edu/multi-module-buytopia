@@ -8,19 +8,16 @@ import java.util.List;
 
 @Getter
 @Entity
+@IdClass(TermId.class)
 public class Term {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // TODO: title, version 복합키 설계
-    private Long id;
     private String title;
+
+    @Id
     private String version;
     private LocalDateTime createdDate;
     private String content;
+    private String required;
     private String isActive;
-
-    // TODO: 삭제
-    @OneToMany(mappedBy = "term")
-    private List<Agreement> agreements;
 }
