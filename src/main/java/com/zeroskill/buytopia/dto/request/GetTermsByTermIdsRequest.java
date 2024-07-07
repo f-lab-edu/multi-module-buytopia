@@ -1,19 +1,17 @@
 package com.zeroskill.buytopia.dto.request;
 
-import com.zeroskill.buytopia.exception.EmptyFieldException;
 import com.zeroskill.buytopia.exception.ErrorType;
-import com.zeroskill.buytopia.validation.FieldValidatable;
+import com.zeroskill.buytopia.validation.Check;
 
-import java.util.List;
-
+// TODO: purpose를 ENUM으로 처리
 public record GetTermsByTermIdsRequest(
-        List<Long> termIds
-) implements FieldValidatable {
+        String purpose
+) implements Check {
 
     @Override
-    public boolean checkEmptyField() {
-        if (termIds == null || termIds.isEmpty()) {
-            throw new EmptyFieldException(ErrorType.EMPTY_FIELD_CD.getData());
+    public boolean check() {
+        if (purpose == null || purpose.isEmpty()) {
+            throw ErrorType.EMPTY_FIELD.exception();
         }
         return true;
     }
