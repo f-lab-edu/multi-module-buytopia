@@ -19,10 +19,11 @@ public class TermController {
     private final TermService termService;
 
     @GetMapping("/")
+    // TODO: GET method사용시 파라미터를 urlParameter(?)로 받아주기
     public ApiResponse<List<TermDto>> getTermsByIds(@RequestBody GetTermsByTermIdsRequest request) {
         // TODO: 가장 최신의 액티브인 버전
         request.check();
-        List<TermDto> termDtos = termService.getTermsByIds(request.termIds());
+        List<TermDto> termDtos = termService.getTermsByPurpose(request.purpose());
         return ApiResponse.of(termDtos);
     }
 

@@ -16,6 +16,7 @@ public class TermId implements Serializable {
 
     // Getters, Setters, hashCode, equals methods
 
+    // TODO: equals와 hashCode를 override할때의 주의점
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

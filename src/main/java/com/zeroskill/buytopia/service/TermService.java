@@ -21,8 +21,9 @@ public class TermService {
     private final TermRepository termRepository;
     private final AgreementRepository agreementRepository;
 
-    public List<TermDto> getTermsByIds(List<Long> termIds) {
-        List<Term> terms = termRepository.findAllById(termIds);
+    // 로직을 분리하는 방법도 있음
+    public List<TermDto> getTermsByPurpose(String purpose) {
+        List<Term> terms = termRepository.findLatestActiveTermsByPurpose(purpose);
         return terms.stream()
                 .map(TermDto::of)
                 .toList();
@@ -30,10 +31,22 @@ public class TermService {
 
     public List<AgreementDto> agree(String loginId, List<Long> termIds) {
         // TODO: 필수약관 들어갔는지 체크(required)
+        // Member 조회
         Member member = memberRepository.findByLoginId(loginId).orElseThrow(ErrorType.DATA_NOT_FOUND::exception);
+        // Term 조회
         List<Term> terms = termRepository.findAllById(termIds);
+
+        // 필수 약관 체크
+//        List<Term> requiredTerms = terms.stream()
+//                .filter(Term::isRequired)
+//                .toList();
+//
+//        long requiredTermCount = termRepository.countByRequiredTrue();
+//        System.out.println("count: " + requiredTermCount);
+
+
         List<Agreement> agreements = terms.stream()
-                .map(term -> new com.zeroskill.buytopia.entity.Agreement(member, term))
+                .map(term -> new Agreement(member, term))
                 .toList();
 
         List<Agreement> savedAgreements = agreementRepository.saveAll(agreements);

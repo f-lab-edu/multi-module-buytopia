@@ -3,15 +3,14 @@ package com.zeroskill.buytopia.dto.request;
 import com.zeroskill.buytopia.exception.ErrorType;
 import com.zeroskill.buytopia.validation.Check;
 
-import java.util.List;
-
+// TODO: purpose를 ENUM으로 처리
 public record GetTermsByTermIdsRequest(
-        List<Long> termIds
+        String purpose
 ) implements Check {
 
     @Override
     public boolean check() {
-        if (termIds == null || termIds.isEmpty()) {
+        if (purpose == null || purpose.isEmpty()) {
             throw ErrorType.EMPTY_FIELD.exception();
         }
         return true;

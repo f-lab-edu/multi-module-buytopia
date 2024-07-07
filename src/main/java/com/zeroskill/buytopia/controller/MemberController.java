@@ -22,6 +22,8 @@ public class MemberController {
 
     @PostMapping({"", "/"})
     public ApiResponse<MemberRegistrationResponse> register(@RequestBody MemberRegistrationRequest request) {
+        // TODO: app에서 넘어온 약관들이 필수 약관 모두 다 동의했는지 (복합키 비교)
+        // TODO: 전화번호, 이메일 인증은 완료시에 유저가 전화번호 인증이 된 사람인지에 대한 식별키를 가지고 있어야 함
         request.check();
         MemberDto memberDto = MemberRegistrationRequest.toMemberDto(request);
         MemberRegistrationResponse memberRegistrationResponse = memberService.register(memberDto);
