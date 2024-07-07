@@ -1,44 +1,22 @@
 package com.zeroskill.buytopia.exceptionhandler;
 
 import com.zeroskill.buytopia.dto.response.ApiResponse;
-import com.zeroskill.buytopia.exception.DataNotFoundException;
-import com.zeroskill.buytopia.exception.EmptyFieldException;
-import com.zeroskill.buytopia.exception.InvalidEmailFormatException;
-import com.zeroskill.buytopia.exception.PasswordMissMatchException;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.HttpStatus;
+import com.zeroskill.buytopia.exception.BuytopiaException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(PasswordMissMatchException.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public <T> ApiResponse<T> handlePasswordMismatchException(PasswordMissMatchException e, HttpServletResponse response) {
-        return ApiResponse.of(e.getCode(), e.getMessage());
+    @ExceptionHandler(BuytopiaException.class)
+    @ResponseBody // TODO: 삭제
+    public <T> ResponseEntity<ApiResponse<T>> handleBuytopiaException(BuytopiaException e) {
+        return new ResponseEntity<>(ApiResponse.of(e.getCode(), e.getMsg()), e.getHttpStatusCode());
     }
-
-    @ExceptionHandler(EmptyFieldException.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public <T> ApiResponse<T> handleEmptyFieldException(EmptyFieldException e) {
-        return ApiResponse.of(e.getCode(), e.getMessage());
-    }
-
-    @ExceptionHandler(InvalidEmailFormatException.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public <T> ApiResponse<T> handleInvalidEmailFormatException(InvalidEmailFormatException e) {
-        return ApiResponse.of(e.getCode(), e.getMessage());
-    }
-
-    @ExceptionHandler(DataNotFoundException.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public <T> ApiResponse<T> handleDuplicateEntityException(DataNotFoundException e) {
-        return ApiResponse.of(e.getCode(), e.getMessage());
-    }
+    
+    // TODO: Exception 핸들러 추가 (예상치 못한 오류가 발생함.)
+    // Exception의 우선순위를 BuytopiaException의 하위로
+    // ExceptionHandler 로그찍도록 설정
+    // 알람 시스템에 일정 레벨 이상의 에러만 로그를 찍도록 설정
 }

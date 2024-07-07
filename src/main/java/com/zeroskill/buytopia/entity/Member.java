@@ -37,7 +37,7 @@ public class Member {
     private Address address;
 
     @OneToMany(mappedBy = "member")
-    private List<MemberTerm> memberTerms;
+    private List<Agreement> agreements;
 
 
     public Member(String loginId, String name, String email, String password, Address address) {
