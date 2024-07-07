@@ -13,6 +13,6 @@ public record TermDto(
         boolean isActive
 ) {
     public static TermDto of(Term term) {
-        return new TermDto(term.getTitle(), term.getVersion(), term.getCreatedDate(), term.getContent(), term.isRequired(), term.isActive());
+        return new TermDto(term.getId().getTitle(), term.getId().getVersion(), term.getCreatedDate(), term.getContent(), term.isRequired(), term.isActive());
     }
 }
