@@ -6,9 +6,12 @@ import com.zeroskill.buytopia.dto.request.MemberRegistrationRequest;
 import com.zeroskill.buytopia.dto.response.ApiResponse;
 import com.zeroskill.buytopia.dto.response.MemberAvailabilityCheckResponse;
 import com.zeroskill.buytopia.dto.response.MemberRegistrationResponse;
+import com.zeroskill.buytopia.exception.BuytopiaException;
 import com.zeroskill.buytopia.exception.ErrorType;
 import com.zeroskill.buytopia.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/members")
 @RequiredArgsConstructor
 public class MemberController {
+    private static final Logger logger = LogManager.getLogger(MemberController.class);
+
     private final MemberService memberService;
 
     @PostMapping({"", "/"})
@@ -37,7 +42,7 @@ public class MemberController {
         String email = request.email();
         boolean isDuplicate = memberService.isLoginIdOrEmailDuplicate(loginId, email);
         if (isDuplicate) {
-            throw ErrorType.DUPLICATE_ENTITY.exception();
+            throw new BuytopiaException(ErrorType.DUPLICATE_ENTITY, logger::error);
         }
         return ApiResponse.of(new MemberAvailabilityCheckResponse(true));
     }

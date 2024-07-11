@@ -4,9 +4,12 @@ import com.zeroskill.buytopia.dto.MemberDto;
 import com.zeroskill.buytopia.dto.response.MemberRegistrationResponse;
 import com.zeroskill.buytopia.entity.Address;
 import com.zeroskill.buytopia.entity.Member;
+import com.zeroskill.buytopia.exception.BuytopiaException;
 import com.zeroskill.buytopia.exception.ErrorType;
 import com.zeroskill.buytopia.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +18,17 @@ import static com.zeroskill.buytopia.dto.MemberDto.hashPassword;
 @Service
 @RequiredArgsConstructor
 public class MemberService {
+    private static final Logger logger = LogManager.getLogger(MemberService.class);
+
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
 
     public MemberRegistrationResponse register(MemberDto memberDto) {
-        if(isLoginIdOrEmailDuplicate(memberDto.loginId(), memberDto.email())) {
+        if (isLoginIdOrEmailDuplicate(memberDto.loginId(), memberDto.email())) {
             // TODO: new BuytopiaException 생성자로 생성하고 LogLevel또한 파라미터로 넣어주기
             // consumer(lambda로 log.info라고 하는 메서드)를 넘기면 됨
             // 세부사항들은 개발자가 볼 수 있게 로그를 남겨야 함.(넘어온 log.info의 클래스나 부족한 데이터 등을 찍어줘야함.)
-            throw ErrorType.DUPLICATE_ENTITY.exception();
+            throw new BuytopiaException(ErrorType.DUPLICATE_ENTITY, logger::error);
         }
         String hashedPassword = passwordEncoder.encode(memberDto.password());
         Address address = Address.toEntity(memberDto.addressdto());

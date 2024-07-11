@@ -19,14 +19,14 @@ public class TermController {
     private final TermService termService;
 
     @GetMapping("")
-    public ApiResponse<List<TermDto>> getTermsByIds(@RequestParam("purpose") PurposeRequest request) {
+    public ApiResponse<List<TermDto>> getTermsByIds(@RequestParam("purpose") PurposeRequest purpose) {
         // TODO: 가장 최신의 액티브인 버전
-        List<TermDto> termDtos = termService.getTermsByPurpose(request.name());
+        List<TermDto> termDtos = termService.getTermsByPurpose(purpose);
         return ApiResponse.of(termDtos);
     }
 
     @PostMapping("/agree")
-    public ApiResponse<List<AgreementDto>> agreeToTerms(@RequestBody AgreeToTermsRequest request) {
+    public ApiResponse<List<AgreementDto>> agreeToTerms(@RequestParam("purpose") PurposeRequest purpose, @RequestBody AgreeToTermsRequest request) {
         request.check();
         List<AgreementDto> agreementDtos = termService.agree(request.loginId(), request.termIds());
         return ApiResponse.of(agreementDtos);

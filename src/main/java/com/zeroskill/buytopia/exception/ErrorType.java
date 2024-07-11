@@ -7,23 +7,16 @@ import org.springframework.http.HttpStatusCode;
 @Getter
 @AllArgsConstructor
 public enum ErrorType {
-    // TODO: logback, slf4j
-    // slf4j -> interface
-    // log4j2, logback -> 구현체
-    // TODO: externalMsg, internalMsg
-    EMPTY_FIELD("V-01", "빈 필드가 존재합니다.", HttpStatusCode.valueOf(400)),
-    INVALID_EMAIL_FORMAT("V-02", "이메일 형식이 유효하지 않습니다.", HttpStatusCode.valueOf(400)),
-    PASSWORD_MISS_MATCH("V-03", "비밀번호 확인이 일치하지 않습니다.", HttpStatusCode.valueOf(400)),
-    DUPLICATE_ENTITY("D-01", "이미 존재하는 데이터입니다.", HttpStatusCode.valueOf(400)),
-    DATA_NOT_FOUND("D-02", "존재하지 않는 데이터입니다.", HttpStatusCode.valueOf(404));
+    EMPTY_FIELD("V-01", "빈 필드가 존재합니다.", "빈 필드가 존재합니다.", HttpStatusCode.valueOf(400)),
+    INVALID_EMAIL_FORMAT("V-02", "이메일 형식이 유효하지 않습니다.", "이메일 형식이 유효하지 않습니다.", HttpStatusCode.valueOf(400)),
+    PASSWORD_MISS_MATCH("V-03", "비밀번호 확인이 일치하지 않습니다.", "비밀번호 확인이 일치하지 않습니다.", HttpStatusCode.valueOf(400)),
+    DUPLICATE_ENTITY("D-01", "이미 존재하는 데이터입니다.", "이미 존재하는 데이터입니다.", HttpStatusCode.valueOf(400)),
+    DATA_NOT_FOUND("D-02", "존재하지 않는 데이터입니다.", "존재하지 않는 데이터입니다.", HttpStatusCode.valueOf(404));
 
     private final String code;
-    private final String msg;
+    private final String intMsg;
+    private final String extMsg;
     private final HttpStatusCode httpStatusCode;
-
-    public BuytopiaException exception() {
-        return new BuytopiaException(code, msg, httpStatusCode);
-    }
 }
 
 //V-01: 필드가 비어 있음 (Empty Field)

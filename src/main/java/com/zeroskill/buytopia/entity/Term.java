@@ -22,4 +22,6 @@ public class Term {
 
     @OneToMany(mappedBy = "term")
     private Set<TermPurpose> termPurposes;
+
+    // TODO: static으로 생성해줘야됨
 }
