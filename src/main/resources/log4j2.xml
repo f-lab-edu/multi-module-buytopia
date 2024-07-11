@@ -2,8 +2,8 @@
 <Configuration status="INFO">
     <Properties>
         <Property name="LOG_PATH">logs</Property>
-        <Property name="DEFAULT_PATTERN">[%d{yyyy-MM-dd HH:mm:ss.SSS}] %5p ${sys:PID} --- 에러발생위치: [%15.15t] %-40.40c{1.} %C{1}.%M : %m%n%xwEx</Property>
-        <Property name="COLOR_PATTERN">[%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint}] %clr{%5p} %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} 에러발생위치: %clr{%-40.40c}{cyan} %clr{%C{1}.%M}{yellow} %clr{:}{faint} %m%n%xwEx</Property>
+        <Property name="DEFAULT_PATTERN">[%d{yyyy-MM-dd HH:mm:ss.SSS}] %5p ${sys:PID} --- [%15.15t] %-40.40c{1.} %C{1}.%M : %m%n%xwEx</Property>
+        <Property name="COLOR_PATTERN">[%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint}] %clr{%5p} %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c}{cyan} %clr{%C{1}.%M}{yellow} %clr{:}{faint} %m%n%xwEx</Property>
         <Property name="TEST_PATTERN">%d %5p [%c] %m%n</Property>
     </Properties>
 

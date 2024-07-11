@@ -39,7 +39,7 @@ public class TermService {
         // TODO: 필수약관 들어갔는지 체크(required)
         // Member 조회
         Member member = memberRepository.findByLoginId(loginId).orElseThrow(
-                () -> new BuytopiaException(ErrorType.DUPLICATE_ENTITY, logger::error)
+                () -> new BuytopiaException(ErrorType.DATA_NOT_FOUND, logger::error)
         );
         // Term 조회
         List<Term> terms = termRepository.findAllById(termIds);
@@ -47,6 +47,8 @@ public class TermService {
         List<Agreement> agreements = terms.stream()
                 .map(term -> new Agreement(member, term))
                 .toList();
+
+        System.out.println("agreements 갯수: " + terms.size());
 
         List<Agreement> savedAgreements = agreementRepository.saveAll(agreements);
         return savedAgreements.stream()

@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
     @Order(2)
     @ExceptionHandler(Exception.class)
     public <T> ResponseEntity<ApiResponse<T>> handleException(Exception e) {
-        return new ResponseEntity<>(ApiResponse.of(HttpStatusCode.valueOf(500).toString(), "예상치 못한 에러 발생"), HttpStatusCode.valueOf(400));
+        return new ResponseEntity<>(ApiResponse.of(HttpStatusCode.valueOf(500).toString(), "예상치 못한 에러 발생"), HttpStatusCode.valueOf(500));
     }
     // TODO: Exception 핸들러 추가 (예상치 못한 오류가 발생함.)
     // Exception의 우선순위를 BuytopiaException의 하위로
