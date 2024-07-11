@@ -35,13 +35,13 @@ public class TermRepositoryImpl implements TermRepositoryCustom {
                 .join(termPurpose.purpose, purposeEntity)
                 .where(term.isActive.isTrue()
                         .and(termPurpose.purpose.name.eq(purpose)))
-                .orderBy(term.title.asc(), term.version.desc())
+                .orderBy(term.id.title.asc(), term.id.version.desc())
                 .fetch();
 
         // 최신 버전만 필터링
         Map<String, Term> latestTermsMap = latestTerms.stream()
                 .collect(Collectors.toMap(
-                        Term::getTitle,
+                        qterm -> qterm.getId().getTitle(),
                         qTerm -> qTerm,
                         (existing, replacement) -> existing // 최신 버전만 유지
                 ));

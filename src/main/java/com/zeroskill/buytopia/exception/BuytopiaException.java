@@ -1,21 +1,37 @@
 package com.zeroskill.buytopia.exception;
 
 import lombok.Getter;
+import org.springframework.boot.logging.LogLevel;
 import org.springframework.http.HttpStatusCode;
 
+import java.util.function.Consumer;
+
 @Getter
-// TODO: 생성자 2개 만들기, log Level을 받고 log Level이 주어져있으면 log Level 출력, 아니면 그냥 생성자 사용
-// logLevel에 따라서 주입
-//
 public class BuytopiaException extends RuntimeException {
-    public BuytopiaException(String code, String msg, HttpStatusCode httpStatusCode) {
-        super(msg);
-        this.code = code;
-        this.msg = msg;
-        this.httpStatusCode = httpStatusCode;
+    public BuytopiaException() {
+        this.code = "";
+        this.intMsg = "";
+        this.extMsg = "";
+        this.httpStatusCode = null;
+        this.LogLevel = null;
+    }
+
+    public BuytopiaException(ErrorType errorType, Consumer<String> logger) {
+        super(errorType.getIntMsg());
+        this.code = errorType.getCode();
+        this.intMsg = errorType.getIntMsg();
+        this.extMsg = errorType.getExtMsg();
+        this.httpStatusCode = errorType.getHttpStatusCode();
+        this.LogLevel = null;
+
+        String msg = String.format("Exception occurred: code=%s, msg=%s, httpStatus=%s",
+                errorType.getCode(), errorType.getIntMsg(), errorType.getHttpStatusCode());
+        logger.accept(msg);
     }
 
     private final String code;
-    private final String msg;
+    private final String intMsg;
+    private final String extMsg;
     private final HttpStatusCode httpStatusCode;
+    private final LogLevel LogLevel;
 }

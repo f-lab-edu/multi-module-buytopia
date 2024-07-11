@@ -23,8 +23,13 @@ spring:
       enabled: true
 
 logging:
+  config: classpath:log4j2.xml
   level:
     org:
       hibernate:
 #        SQL: debug
 #        type: trace
+
+
+
+
