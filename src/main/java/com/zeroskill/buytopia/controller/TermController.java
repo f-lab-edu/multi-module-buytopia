@@ -28,7 +28,7 @@ public class TermController {
     @PostMapping("/agree")
     public ApiResponse<List<AgreementDto>> agreeToTerms(@RequestParam("purpose") PurposeRequest purpose, @RequestBody AgreeToTermsRequest request) {
         request.check();
-        List<AgreementDto> agreementDtos = termService.agree(request.loginId(), request.termIds());
+        List<AgreementDto> agreementDtos = termService.agree(purpose, request.loginId(), request.termIds());
         return ApiResponse.of(agreementDtos);
     }
 }

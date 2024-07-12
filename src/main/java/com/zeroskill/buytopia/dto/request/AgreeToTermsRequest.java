@@ -1,5 +1,6 @@
 package com.zeroskill.buytopia.dto.request;
 
+import com.zeroskill.buytopia.entity.TermId;
 import com.zeroskill.buytopia.exception.BuytopiaException;
 import com.zeroskill.buytopia.exception.ErrorType;
 import com.zeroskill.buytopia.validation.Check;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public record AgreeToTermsRequest(
         String loginId,
-        List<Long> termIds
+        List<TermId> termIds
 ) implements Check {
     private static final Logger logger = LogManager.getLogger(AgreeToTermsRequest.class);
     @Override
