@@ -12,7 +12,8 @@ public enum ErrorType {
     PASSWORD_MISS_MATCH("V-03", "비밀번호 확인이 일치하지 않습니다.", "비밀번호 확인이 일치하지 않습니다.", HttpStatusCode.valueOf(400)),
     DUPLICATE_ENTITY("D-01", "이미 존재하는 데이터입니다.", "이미 존재하는 데이터입니다.", HttpStatusCode.valueOf(400)),
     DATA_NOT_FOUND("D-02", "존재하지 않는 데이터입니다.", "존재하지 않는 데이터입니다.", HttpStatusCode.valueOf(404)),
-    MISSING_REQUIRED_TERMS("DB-02", "필수 약관이 누락되었습니다.", "의미적 오류로 인해 처리가 불가능합니다.", HttpStatusCode.valueOf(422));
+    MISSING_REQUIRED_TERMS("DB-02", "필수 약관이 누락되었습니다.", "의미적 오류로 인해 처리가 불가능합니다.", HttpStatusCode.valueOf(422)),
+    AUTHENTICATION_FAILED("A-01", "이메일 인증에 실패했습니다.", "인증에 실패했습니다.", HttpStatusCode.valueOf(400));
 
     private final String code;
     private final String intMsg;
