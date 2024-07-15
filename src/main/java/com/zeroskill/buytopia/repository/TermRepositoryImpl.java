@@ -5,9 +5,7 @@ import com.zeroskill.buytopia.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
@@ -77,11 +75,11 @@ public class TermRepositoryImpl implements TermRepositoryCustom {
     }
 
     @Override
-    public List<Term> findByTermIds(List<TermId> termIds) {
+    public Set<Term> findByTermIds(List<TermId> termIds) {
         QTerm qTerm = QTerm.term;
 
-        return queryFactory.selectFrom(qTerm)
+        return new HashSet<>(queryFactory.selectFrom(qTerm)
                 .where(qTerm.id.in(termIds))
-                .fetch();
+                .fetch());
     }
 }

@@ -21,8 +21,4 @@ public class GlobalExceptionHandler {
     public <T> ResponseEntity<ApiResponse<T>> handleException(Exception e) {
         return new ResponseEntity<>(ApiResponse.of(HttpStatusCode.valueOf(500).toString(), "예상치 못한 에러 발생"), HttpStatusCode.valueOf(500));
     }
-    // TODO: Exception 핸들러 추가 (예상치 못한 오류가 발생함.)
-    // Exception의 우선순위를 BuytopiaException의 하위로
-    // ExceptionHandler 로그찍도록 설정
-    // 알람 시스템에 일정 레벨 이상의 에러만 로그를 찍도록 설정
 }

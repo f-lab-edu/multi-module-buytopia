@@ -38,13 +38,11 @@ public class TermService {
     }
 
     public List<AgreementDto> agree(PurposeRequest purpose, String loginId, List<TermId> termIds) {
-        // TODO: 필수약관 들어갔는지 체크(required)
-        // Member 조회
         Member member = memberRepository.findByLoginId(loginId).orElseThrow(
                 () -> new BuytopiaException(ErrorType.DATA_NOT_FOUND, logger::error)
         );
 
-        List<Term> terms = termRepository.findByTermIds(termIds);
+        Set<Term> terms = termRepository.findByTermIds(termIds);
         checkIfUserAlreadyAgreed(member, terms);
         containsRequiredTerms(purpose, terms);
 
@@ -58,20 +56,18 @@ public class TermService {
                 .toList();
     }
 
-    private void containsRequiredTerms(PurposeRequest purpose, List<Term> terms) {
-        Set<Term> termSet = new HashSet<>(terms);
+    private void containsRequiredTerms(PurposeRequest purpose, Set<Term> terms) {
         List<Term> requiredTerms = termRepository.findLatestActiveRequiredTermsByPurpose(purpose.name());
 
-        if(!termSet.containsAll(requiredTerms)) {
+        if(!terms.containsAll(requiredTerms)) {
             throw new BuytopiaException(ErrorType.MISSING_REQUIRED_TERMS, logger::error);
         }
     }
 
-    public void checkIfUserAlreadyAgreed(Member member, List<Term> terms) {
+    public void checkIfUserAlreadyAgreed(Member member, Set<Term> terms) {
         List<Agreement> existingAgreements = agreementRepository.findByMemberAndTermIn(member, terms);
         if (!existingAgreements.isEmpty()) {
             throw new BuytopiaException(ErrorType.DUPLICATE_ENTITY, logger::error);
         }
     }
-
 }

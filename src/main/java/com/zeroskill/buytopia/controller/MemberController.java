@@ -13,6 +13,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.*;
 
+import static com.zeroskill.buytopia.util.Util.isValidEmail;
+
 @RestController
 @RequestMapping("/api/v1/members")
 @RequiredArgsConstructor
@@ -23,17 +25,14 @@ public class MemberController {
     private final EmailService emailService;
 
     @PostMapping({"", "/"})
-    public ApiResponse<MemberRegistrationResponse> register(@RequestBody MemberRegistrationRequest request) {
-        // TODO: app에서 넘어온 약관들이 필수 약관 모두 다 동의했는지 (복합키 비교)
-        // TODO: 전화번호, 이메일 인증은 완료시에 유저가 전화번호 인증이 된 사람인지에 대한 식별키를 가지고 있어야 함
+    public void register(@RequestBody MemberRegistrationRequest request) {
         request.check();
         MemberDto memberDto = MemberRegistrationRequest.toMemberDto(request);
-        MemberRegistrationResponse memberRegistrationResponse = memberService.register(memberDto);
-        return ApiResponse.of(memberRegistrationResponse);
+        memberService.register(memberDto);
     }
 
     @PostMapping("/check/availability")
-    public ApiResponse<MemberAvailabilityCheckResponse> checkMemberAvailability(@RequestBody MemberAvailabilityCheckRequest request) {
+    public void checkMemberAvailability(@RequestBody MemberAvailabilityCheckRequest request) {
         request.check();
         String loginId = request.loginId();
         String email = request.email();
@@ -41,22 +40,18 @@ public class MemberController {
         if (isDuplicate) {
             throw new BuytopiaException(ErrorType.DUPLICATE_ENTITY, logger::error);
         }
-        return ApiResponse.of(new MemberAvailabilityCheckResponse(true));
     }
 
     @PostMapping("/send/verification-email")
-    public ApiResponse<SednVerificationEmailResponse> sendVerificationEmail(@RequestParam("email") String email) {
+    public void sendVerificationEmail(@RequestParam("email") String email) {
+        if (!isValidEmail(email)) {
+            throw new BuytopiaException(ErrorType.INVALID_EMAIL_FORMAT, logger::error);
+        }
         emailService.sendVerificationEmail(email);
-        return ApiResponse.of(new SednVerificationEmailResponse("정상적으로 메일이 발송되었습니다."));
     }
 
     @GetMapping("/verify/email")
-    public ApiResponse<VerifyEmailResponse> verifyEmail(@RequestParam("token") String token) {
-        boolean verified = emailService.verifyEmail(token);
-        if (verified) {
-            return ApiResponse.of(new VerifyEmailResponse("이메일 인증이 성공했습니다."));
-        } else {
-            throw new BuytopiaException(ErrorType.AUTHENTICATION_FAILED, logger::error);
-        }
+    public void verifyEmail(@RequestParam("token") String token) {
+        emailService.verifyEmail(token);
     }
 }
