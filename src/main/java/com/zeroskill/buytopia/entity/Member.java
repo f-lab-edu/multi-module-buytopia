@@ -28,6 +28,9 @@ public class Member {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "activated", columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean activated = false;
+
     @ColumnDefault("'SILVER'")
     @Enumerated(EnumType.STRING)
     @Column(name = "grade", nullable = false)
@@ -39,7 +42,6 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Agreement> agreements;
 
-
     public Member(String loginId, String name, String email, String password, Address address) {
         this.loginId = loginId;
         this.name = name;
@@ -47,9 +49,14 @@ public class Member {
         this.grade = Grade.SILVER;
         this.password = password;
         this.address = address;
+        this.activated = false;
     }
 
     public static Member toEntity(MemberDto memberDto, Address address) {
         return new Member(memberDto.loginId(), memberDto.name(), memberDto.email(), memberDto.password(),address);
+    }
+
+    public void activateAccount() {
+        this.activated = true;
     }
 }

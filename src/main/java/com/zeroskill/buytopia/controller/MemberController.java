@@ -3,19 +3,15 @@ package com.zeroskill.buytopia.controller;
 import com.zeroskill.buytopia.dto.MemberDto;
 import com.zeroskill.buytopia.dto.request.MemberAvailabilityCheckRequest;
 import com.zeroskill.buytopia.dto.request.MemberRegistrationRequest;
-import com.zeroskill.buytopia.dto.response.ApiResponse;
-import com.zeroskill.buytopia.dto.response.MemberAvailabilityCheckResponse;
-import com.zeroskill.buytopia.dto.response.MemberRegistrationResponse;
+import com.zeroskill.buytopia.dto.response.*;
 import com.zeroskill.buytopia.exception.BuytopiaException;
 import com.zeroskill.buytopia.exception.ErrorType;
+import com.zeroskill.buytopia.service.EmailService;
 import com.zeroskill.buytopia.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/members")
@@ -24,6 +20,7 @@ public class MemberController {
     private static final Logger logger = LogManager.getLogger(MemberController.class);
 
     private final MemberService memberService;
+    private final EmailService emailService;
 
     @PostMapping({"", "/"})
     public ApiResponse<MemberRegistrationResponse> register(@RequestBody MemberRegistrationRequest request) {
@@ -45,5 +42,21 @@ public class MemberController {
             throw new BuytopiaException(ErrorType.DUPLICATE_ENTITY, logger::error);
         }
         return ApiResponse.of(new MemberAvailabilityCheckResponse(true));
+    }
+
+    @PostMapping("/send/verification-email")
+    public ApiResponse<SednVerificationEmailResponse> sendVerificationEmail(@RequestParam("email") String email) {
+        emailService.sendVerificationEmail(email);
+        return ApiResponse.of(new SednVerificationEmailResponse("정상적으로 메일이 발송되었습니다."));
+    }
+
+    @GetMapping("/verify/email")
+    public ApiResponse<VerifyEmailResponse> verifyEmail(@RequestParam("token") String token) {
+        boolean verified = emailService.verifyEmail(token);
+        if (verified) {
+            return ApiResponse.of(new VerifyEmailResponse("이메일 인증이 성공했습니다."));
+        } else {
+            throw new BuytopiaException(ErrorType.AUTHENTICATION_FAILED, logger::error);
+        }
     }
 }
