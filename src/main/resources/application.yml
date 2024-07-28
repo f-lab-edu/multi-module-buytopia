@@ -47,6 +47,9 @@ logging:
 #        SQL: debug
 #        type: trace
 
-
-
-
+jwt:
+  secret: mySecretKey
+  access:
+    expiration: 3600000
+  refresh:
+    expiration: 604800000
