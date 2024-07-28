@@ -2,6 +2,7 @@ package com.zeroskill.buytopia.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.zeroskill.buytopia.entity.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -9,9 +10,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
+@RequiredArgsConstructor
 public class TermRepositoryImpl implements TermRepositoryCustom {
-    @Autowired
-    private JPAQueryFactory queryFactory;
+
+    private final JPAQueryFactory queryFactory;
 
     @Override
     public List<Term> findLatestActiveTermsByPurpose(String purpose) {
