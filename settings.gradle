@@ -1,2 +1,2 @@
 rootProject.name = 'buytopia'
-include 'user-api'
+include 'user-api', 'admin-api'
