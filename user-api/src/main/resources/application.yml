@@ -3,9 +3,9 @@ server:
 
 spring:
   application:
-    name: buytopia
+    name: userapi
   datasource:
-    url: jdbc:mysql://localhost:3306/buytopia
+    url: jdbc:mysql://localhost:3306/userapi
     username: root
     password: zeroskill2400
     driver-class-name: com.mysql.cj.jdbc.Driver
