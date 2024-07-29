@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: userapi
+    name: user-api
   datasource:
     url: jdbc:mysql://localhost:3306/userapi
     username: root
