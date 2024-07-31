@@ -34,10 +34,16 @@ spring:
           starttls:
             enable: true
 
-  redis:
-    host: localhost
-    port: 6379
-    password: zeroskill2400
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: zeroskill2400
+
+  output:
+    ansi:
+      enabled: ALWAYS
+
 
 logging:
   config: classpath:log4j2.xml
