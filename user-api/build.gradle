@@ -4,6 +4,17 @@ buildscript {
 	}
 }
 
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.2'
+	id 'io.spring.dependency-management' version '1.1.6'
+	id 'application'
+}
+
+application {
+	mainClassName = 'com.zeroskill.user_api.UserApiApplication'
+}
+
 group = 'com.zeroskill'
 version = '0.0.1-SNAPSHOT'
 
@@ -40,7 +51,6 @@ dependencies {
 	implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
 
 	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
 	annotationProcessor 'org.projectlombok:lombok'
 	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
