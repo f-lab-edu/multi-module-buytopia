@@ -4,3 +4,6 @@ server:
 spring:
   application:
     name: admin-api
+  output:
+    ansi:
+      enabled: ALWAYS
