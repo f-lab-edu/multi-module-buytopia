@@ -1,4 +1,4 @@
-package com.zeroskill.user_api.dto;
+package com.zeroskill.common.dto;
 
 public record AddressDto(
         String mainAddress,

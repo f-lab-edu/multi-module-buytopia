@@ -1,6 +1,6 @@
-package com.zeroskill.user_api.repository;
+package com.zeroskill.common.repository;
 
-import com.zeroskill.user_api.entity.Member;
+import com.zeroskill.common.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

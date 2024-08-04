@@ -1,4 +1,4 @@
-package com.zeroskill.user_api.entity;
+package com.zeroskill.common.entity;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;

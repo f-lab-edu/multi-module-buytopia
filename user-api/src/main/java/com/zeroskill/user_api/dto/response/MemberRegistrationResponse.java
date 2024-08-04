@@ -1,8 +1,8 @@
 package com.zeroskill.user_api.dto.response;
 
-import com.zeroskill.user_api.entity.Address;
-import com.zeroskill.user_api.entity.Grade;
-import com.zeroskill.user_api.entity.Member;
+import com.zeroskill.common.entity.Address;
+import com.zeroskill.common.entity.Grade;
+import com.zeroskill.common.entity.Member;
 
 public record MemberRegistrationResponse(
     Long id,

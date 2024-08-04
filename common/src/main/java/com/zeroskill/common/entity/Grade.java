@@ -1,4 +1,4 @@
-package com.zeroskill.user_api.entity;
+package com.zeroskill.common.entity;
 
 public enum Grade {
     SILVER,

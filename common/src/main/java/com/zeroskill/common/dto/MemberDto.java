@@ -1,6 +1,6 @@
-package com.zeroskill.user_api.dto;
+package com.zeroskill.common.dto;
 
-import com.zeroskill.user_api.entity.Grade;
+import com.zeroskill.common.entity.Grade;
 
 public record MemberDto(
         Long id,

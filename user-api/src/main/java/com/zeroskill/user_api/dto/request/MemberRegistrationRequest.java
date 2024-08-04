@@ -1,8 +1,8 @@
 package com.zeroskill.user_api.dto.request;
 
-import com.zeroskill.user_api.dto.AddressDto;
-import com.zeroskill.user_api.dto.MemberDto;
-import com.zeroskill.user_api.entity.Grade;
+import com.zeroskill.common.dto.AddressDto;
+import com.zeroskill.common.dto.MemberDto;
+import com.zeroskill.common.entity.Grade;
 import com.zeroskill.user_api.exception.UserApiException;
 import com.zeroskill.user_api.exception.ErrorType;
 import com.zeroskill.user_api.validation.Check;

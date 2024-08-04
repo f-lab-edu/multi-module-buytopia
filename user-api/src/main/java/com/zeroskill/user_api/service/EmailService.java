@@ -1,9 +1,9 @@
 package com.zeroskill.user_api.service;
 
-import com.zeroskill.user_api.entity.Member;
+import com.zeroskill.common.entity.Member;
 import com.zeroskill.user_api.exception.UserApiException;
 import com.zeroskill.user_api.exception.ErrorType;
-import com.zeroskill.user_api.repository.MemberRepository;
+import com.zeroskill.common.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;

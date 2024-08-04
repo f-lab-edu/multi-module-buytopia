@@ -1,7 +1,7 @@
-package com.zeroskill.user_api.repository;
+package com.zeroskill.common.repository;
 
-import com.zeroskill.user_api.entity.Term;
-import com.zeroskill.user_api.entity.TermId;
+import com.zeroskill.common.entity.Term;
+import com.zeroskill.common.entity.TermId;
 
 import java.util.List;
 import java.util.Set;

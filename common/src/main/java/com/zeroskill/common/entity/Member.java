@@ -1,6 +1,7 @@
-package com.zeroskill.user_api.entity;
+package com.zeroskill.common.entity;
 
-import com.zeroskill.user_api.dto.MemberDto;
+
+import com.zeroskill.common.dto.MemberDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

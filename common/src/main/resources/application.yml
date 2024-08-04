@@ -5,7 +5,10 @@ spring:
   application:
     name: common
   datasource:
-    url: jdbc:mysql://localhost:3306/userapi
+    url: jdbc:mysql://localhost:3306/buytopia
     username: root
     password: zeroskill2400
     driver-class-name: com.mysql.cj.jdbc.Driver
+  output:
+    ansi:
+      enabled: ALWAYS

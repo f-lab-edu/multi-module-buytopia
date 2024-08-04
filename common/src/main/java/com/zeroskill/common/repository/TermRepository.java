@@ -1,6 +1,6 @@
-package com.zeroskill.user_api.repository;
+package com.zeroskill.common.repository;
 
-import com.zeroskill.user_api.entity.Term;
+import com.zeroskill.common.entity.Term;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TermRepository extends JpaRepository<Term, Long>, TermRepositoryCustom {

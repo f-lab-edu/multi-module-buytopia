@@ -1,17 +1,17 @@
 package com.zeroskill.user_api.service;
 
-import com.zeroskill.user_api.dto.AgreementDto;
-import com.zeroskill.user_api.dto.TermDto;
+import com.zeroskill.common.dto.AgreementDto;
+import com.zeroskill.common.dto.TermDto;
 import com.zeroskill.user_api.dto.request.PurposeRequest;
-import com.zeroskill.user_api.entity.Agreement;
-import com.zeroskill.user_api.entity.Member;
-import com.zeroskill.user_api.entity.Term;
-import com.zeroskill.user_api.entity.TermId;
+import com.zeroskill.common.entity.Agreement;
+import com.zeroskill.common.entity.Member;
+import com.zeroskill.common.entity.Term;
+import com.zeroskill.common.entity.TermId;
 import com.zeroskill.user_api.exception.UserApiException;
 import com.zeroskill.user_api.exception.ErrorType;
-import com.zeroskill.user_api.repository.AgreementRepository;
-import com.zeroskill.user_api.repository.MemberRepository;
-import com.zeroskill.user_api.repository.TermRepository;
+import com.zeroskill.common.repository.AgreementRepository;
+import com.zeroskill.common.repository.MemberRepository;
+import com.zeroskill.common.repository.TermRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

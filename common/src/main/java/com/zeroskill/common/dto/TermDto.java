@@ -1,6 +1,6 @@
-package com.zeroskill.user_api.dto;
+package com.zeroskill.common.dto;
 
-import com.zeroskill.user_api.entity.Term;
+import com.zeroskill.common.entity.Term;
 
 import java.time.LocalDateTime;
 

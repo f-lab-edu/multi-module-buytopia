@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # mysql
   mysql:
@@ -9,7 +7,7 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: zeroskill2400
-      MYSQL_DATABASE: userapi
+      MYSQL_DATABASE: buytopia
     volumes:
       - mysql_data:/var/lib/mysql
 

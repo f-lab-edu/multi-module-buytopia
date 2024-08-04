@@ -1,6 +1,7 @@
-package com.zeroskill.user_api.entity;
+package com.zeroskill.common.entity;
 
-import com.zeroskill.user_api.dto.AddressDto;
+
+import com.zeroskill.common.dto.AddressDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Builder;

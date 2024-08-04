@@ -1,4 +1,6 @@
-package com.zeroskill.user_api.dto;
+package com.zeroskill.common.dto;
+
+import com.zeroskill.common.entity.Agreement;
 
 import java.time.LocalDateTime;
 
@@ -9,7 +11,7 @@ public record AgreementDto(
         boolean agreed,
         LocalDateTime agreedDate
 ) {
-    public static AgreementDto of(com.zeroskill.user_api.entity.Agreement agreement) {
+    public static AgreementDto of(Agreement agreement) {
         return new AgreementDto(
                 agreement.getMember().getLoginId(),
                 agreement.getTerm().getId().getTitle(),

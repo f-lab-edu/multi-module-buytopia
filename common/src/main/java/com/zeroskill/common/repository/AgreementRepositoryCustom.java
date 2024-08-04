@@ -1,6 +1,6 @@
-package com.zeroskill.user_api.repository;
+package com.zeroskill.common.repository;
 
-import com.zeroskill.user_api.entity.Agreement;
+import com.zeroskill.common.entity.Agreement;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.zeroskill.user_api.controller;
 
-import com.zeroskill.user_api.dto.MemberDto;
+import com.zeroskill.common.dto.MemberDto;
 import com.zeroskill.user_api.dto.request.MemberAvailabilityCheckRequest;
 import com.zeroskill.user_api.dto.request.MemberRegistrationRequest;
 import com.zeroskill.user_api.exception.UserApiException;

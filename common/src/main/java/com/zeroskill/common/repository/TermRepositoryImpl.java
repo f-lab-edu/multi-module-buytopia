@@ -1,7 +1,7 @@
-package com.zeroskill.user_api.repository;
+package com.zeroskill.common.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.zeroskill.user_api.entity.*;
+import com.zeroskill.common.entity.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
