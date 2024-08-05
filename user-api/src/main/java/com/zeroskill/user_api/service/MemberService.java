@@ -4,8 +4,8 @@ import com.zeroskill.common.dto.MemberDto;
 import com.zeroskill.user_api.dto.response.MemberRegistrationResponse;
 import com.zeroskill.common.entity.Address;
 import com.zeroskill.common.entity.Member;
-import com.zeroskill.user_api.exception.UserApiException;
-import com.zeroskill.user_api.exception.ErrorType;
+import com.zeroskill.common.exception.BuytopiaException;
+import com.zeroskill.common.exception.ErrorType;
 import com.zeroskill.common.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
@@ -37,7 +37,7 @@ public class MemberService implements UserDetailsService {
 
     public MemberRegistrationResponse register(MemberDto memberDto) {
         if (isLoginIdOrEmailDuplicate(memberDto.loginId(), memberDto.email())) {
-            throw new UserApiException(ErrorType.DUPLICATE_ENTITY, logger::error);
+            throw new BuytopiaException(ErrorType.DUPLICATE_ENTITY, logger::error);
         }
         String hashedPassword = passwordEncoder().encode(memberDto.password());
         Address address = Address.toEntity(memberDto.addressdto());
@@ -61,7 +61,7 @@ public class MemberService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
         Member member = memberRepository.findByLoginId(loginId)
-                .orElseThrow(() -> new UserApiException(ErrorType.DATA_NOT_FOUND, logger::error));
+                .orElseThrow(() -> new BuytopiaException(ErrorType.DATA_NOT_FOUND, logger::error));
         if (member == null) {
             throw new UsernameNotFoundException("존재하지 않는 사용자입니다.");
         }

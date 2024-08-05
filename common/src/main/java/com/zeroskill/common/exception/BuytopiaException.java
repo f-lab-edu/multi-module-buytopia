@@ -1,4 +1,4 @@
-package com.zeroskill.user_api.exception;
+package com.zeroskill.common.exception;
 
 import lombok.Getter;
 import org.springframework.boot.logging.LogLevel;
@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatusCode;
 import java.util.function.Consumer;
 
 @Getter
-public class UserApiException extends RuntimeException {
-    public UserApiException() {
+public class BuytopiaException extends RuntimeException {
+    public BuytopiaException() {
         this.code = "";
         this.intMsg = "";
         this.extMsg = "";
@@ -16,7 +16,7 @@ public class UserApiException extends RuntimeException {
         this.LogLevel = null;
     }
 
-    public UserApiException(ErrorType errorType, Consumer<String> logger) {
+    public BuytopiaException(ErrorType errorType, Consumer<String> logger) {
         super(errorType.getIntMsg());
         this.code = errorType.getCode();
         this.intMsg = errorType.getIntMsg();

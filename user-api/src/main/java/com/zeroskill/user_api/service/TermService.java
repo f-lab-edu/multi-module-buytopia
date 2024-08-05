@@ -7,8 +7,8 @@ import com.zeroskill.common.entity.Agreement;
 import com.zeroskill.common.entity.Member;
 import com.zeroskill.common.entity.Term;
 import com.zeroskill.common.entity.TermId;
-import com.zeroskill.user_api.exception.UserApiException;
-import com.zeroskill.user_api.exception.ErrorType;
+import com.zeroskill.common.exception.BuytopiaException;
+import com.zeroskill.common.exception.ErrorType;
 import com.zeroskill.common.repository.AgreementRepository;
 import com.zeroskill.common.repository.MemberRepository;
 import com.zeroskill.common.repository.TermRepository;
@@ -38,7 +38,7 @@ public class TermService {
 
     public List<AgreementDto> agree(PurposeRequest purpose, String loginId, List<TermId> termIds) {
         Member member = memberRepository.findByLoginId(loginId).orElseThrow(
-                () -> new UserApiException(ErrorType.DATA_NOT_FOUND, logger::error)
+                () -> new BuytopiaException(ErrorType.DATA_NOT_FOUND, logger::error)
         );
 
         Set<Term> terms = termRepository.findByTermIds(termIds);
@@ -59,14 +59,14 @@ public class TermService {
         List<Term> requiredTerms = termRepository.findLatestActiveRequiredTermsByPurpose(purpose.name());
 
         if(!terms.containsAll(requiredTerms)) {
-            throw new UserApiException(ErrorType.MISSING_REQUIRED_TERMS, logger::error);
+            throw new BuytopiaException(ErrorType.MISSING_REQUIRED_TERMS, logger::error);
         }
     }
 
     public void checkIfUserAlreadyAgreed(Member member, Set<Term> terms) {
         List<Agreement> existingAgreements = agreementRepository.findByMemberAndTermIn(member, terms);
         if (!existingAgreements.isEmpty()) {
-            throw new UserApiException(ErrorType.DUPLICATE_ENTITY, logger::error);
+            throw new BuytopiaException(ErrorType.DUPLICATE_ENTITY, logger::error);
         }
     }
 }

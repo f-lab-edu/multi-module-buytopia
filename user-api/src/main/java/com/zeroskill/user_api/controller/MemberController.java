@@ -3,8 +3,8 @@ package com.zeroskill.user_api.controller;
 import com.zeroskill.common.dto.MemberDto;
 import com.zeroskill.user_api.dto.request.MemberAvailabilityCheckRequest;
 import com.zeroskill.user_api.dto.request.MemberRegistrationRequest;
-import com.zeroskill.user_api.exception.UserApiException;
-import com.zeroskill.user_api.exception.ErrorType;
+import com.zeroskill.common.exception.BuytopiaException;
+import com.zeroskill.common.exception.ErrorType;
 import com.zeroskill.user_api.service.EmailService;
 import com.zeroskill.user_api.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.*;
 
-import static com.zeroskill.user_api.util.Util.isValidEmail;
+import static com.zeroskill.common.util.Util.isValidEmail;
 
 @RestController
 @RequestMapping("/api/v1/members")
@@ -37,14 +37,14 @@ public class MemberController {
         String email = request.email();
         boolean isDuplicate = memberService.isLoginIdOrEmailDuplicate(loginId, email);
         if (isDuplicate) {
-            throw new UserApiException(ErrorType.DUPLICATE_ENTITY, logger::error);
+            throw new BuytopiaException(ErrorType.DUPLICATE_ENTITY, logger::error);
         }
     }
 
     @PostMapping("/send/verification-email")
     public void sendVerificationEmail(@RequestParam("email") String email) {
         if (!isValidEmail(email)) {
-            throw new UserApiException(ErrorType.INVALID_EMAIL_FORMAT, logger::error);
+            throw new BuytopiaException(ErrorType.INVALID_EMAIL_FORMAT, logger::error);
         }
         emailService.sendVerificationEmail(email);
     }

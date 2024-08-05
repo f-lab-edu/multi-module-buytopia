@@ -10,17 +10,9 @@ application {
 }
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     // 공통 의존성 외에 필요한 추가 의존성은 여기에 추가
 }
 
-sourceSets {
-    main {
-        java {
-            srcDirs = ['src/main/java', 'src/main/generated']
-        }
-    }
-}
 
-tasks.withType(JavaCompile).configureEach {
-    options.getGeneratedSourceOutputDirectory().set(file('src/main/generated'))
-}
+

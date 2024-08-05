@@ -1,28 +1,29 @@
-package com.zeroskill.user_api.dto.request;
+package com.zeroskill.admin_api.dto.request;
 
-import com.zeroskill.common.dto.AddressDto;
+import com.zeroskill.common.dto.AdminDto;
 import com.zeroskill.common.dto.MemberDto;
 import com.zeroskill.common.entity.Grade;
 import com.zeroskill.common.exception.BuytopiaException;
 import com.zeroskill.common.exception.ErrorType;
 import com.zeroskill.common.validation.Check;
+import jakarta.persistence.Column;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import static com.zeroskill.common.util.Util.isValidEmail;
 
-public record MemberRegistrationRequest(
+public record AdminRegistrationRequest(
         String loginId,
         String name,
         String email,
         String password,
-        String passwordConfirm,
-        AddressDto address
-) implements Check {
-    private static final Logger logger = LogManager.getLogger(MemberRegistrationRequest.class);
+        String passwordConfirm
 
-    public static MemberDto toMemberDto(MemberRegistrationRequest request) {
-        return new MemberDto(null, request.loginId(), request.name, request.email, request.password, Grade.SILVER, request.address);
+) implements Check {
+    private static final Logger logger = LogManager.getLogger(AdminRegistrationRequest.class);
+
+    public static AdminDto toAdminDto(AdminRegistrationRequest request) {
+        return new AdminDto(null, request.loginId(), request.name, request.email, request.password);
     }
 
     @Override
@@ -30,7 +31,6 @@ public record MemberRegistrationRequest(
         if (loginId == null || loginId.isEmpty()) {
             throw new BuytopiaException(ErrorType.EMPTY_FIELD, logger::error);
         }
-
         if (name == null || name.isEmpty()) {
             throw new BuytopiaException(ErrorType.EMPTY_FIELD, logger::error);
         }
@@ -49,17 +49,6 @@ public record MemberRegistrationRequest(
 
         if (passwordConfirm == null || passwordConfirm.isEmpty()) {
             throw new BuytopiaException(ErrorType.EMPTY_FIELD, logger::error);
-        }
-
-        if (address == null ||
-                address.mainAddress().isEmpty() ||
-                address.subAddress().isEmpty() ||
-                address.zipcode().isEmpty()) {
-            throw new BuytopiaException(ErrorType.EMPTY_FIELD, logger::error);
-        }
-
-        if (!password.equals(passwordConfirm)) {
-            throw new BuytopiaException(ErrorType.PASSWORD_MISS_MATCH, logger::error);
         }
 
         return true;

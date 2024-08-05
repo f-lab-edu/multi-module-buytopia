@@ -1,8 +1,8 @@
 package com.zeroskill.user_api.service;
 
 import com.zeroskill.common.entity.Member;
-import com.zeroskill.user_api.exception.UserApiException;
-import com.zeroskill.user_api.exception.ErrorType;
+import com.zeroskill.common.exception.BuytopiaException;
+import com.zeroskill.common.exception.ErrorType;
 import com.zeroskill.common.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class EmailService {
     @Transactional
     public void sendVerificationEmail(String email) {
         Member member = memberRepository.findByEmail(email).orElseThrow(
-                () -> new UserApiException(ErrorType.DATA_NOT_FOUND, logger::error)
+                () -> new BuytopiaException(ErrorType.DATA_NOT_FOUND, logger::error)
         );
 
         if (!member.isActivated()) {
@@ -47,7 +47,7 @@ public class EmailService {
         String email = verificationTokenService.validateToken(token);
         if (email != null) {
             Member member = memberRepository.findByEmail(email).orElseThrow(
-                    () -> new UserApiException(ErrorType.DATA_NOT_FOUND, logger::error)
+                    () -> new BuytopiaException(ErrorType.DATA_NOT_FOUND, logger::error)
             );
             if (!member.isActivated()) {
                 member.activateAccount();
