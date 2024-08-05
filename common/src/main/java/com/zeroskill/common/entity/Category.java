@@ -1,5 +1,7 @@
 package com.zeroskill.common.entity;
 
+import com.zeroskill.common.dto.AdminDto;
+import com.zeroskill.common.dto.CategoryDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -20,4 +22,12 @@ public class Category {
 
     @OneToMany(mappedBy = "category")
     private List<Product> products;
+
+    public Category(String name) {
+        this.name = name;
+    }
+
+    public static Category toEntity(CategoryDto dto) {
+        return new Category(dto.name());
+    }
 }

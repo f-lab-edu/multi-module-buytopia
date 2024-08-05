@@ -1,4 +1,4 @@
-package com.zeroskill.user_api.util;
+package com.zeroskill.common.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

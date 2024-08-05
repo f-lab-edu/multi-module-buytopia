@@ -12,5 +12,17 @@ application {
 dependencies {
 	// Spring Boot Web Starter: 웹 애플리케이션 개발을 위한 기본 설정 및 의존성
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// Datasource Decorator: 스프링 부트의 데이터 소스 데코레이터를 위한 라이브러리
+	implementation 'com.github.gavlyukovskiy:datasource-decorator-spring-boot-autoconfigure:1.9.0'
+
+	// Spring Boot Security Starter: 애플리케이션의 보안 기능을 제공
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	// JJWT: JSON Web Token을 생성하고 검증하기 위한 라이브러리
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+	implementation 'com.sun.xml.bind:jaxb-impl:4.0.1'
+	implementation 'com.sun.xml.bind:jaxb-core:4.0.1'
+	implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
 	implementation project(':common')
 }

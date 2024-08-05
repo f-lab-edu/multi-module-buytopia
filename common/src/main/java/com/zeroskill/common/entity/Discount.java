@@ -22,9 +22,9 @@ public class Discount {
 
     @ManyToOne
     @JoinColumn(name = "created_by")
-    private Member createdBy;
+    private Admin createdBy;
 
     @ManyToOne
     @JoinColumn(name = "updated_by")
-    private Member updatedBy;
+    private Admin updatedBy;
 }

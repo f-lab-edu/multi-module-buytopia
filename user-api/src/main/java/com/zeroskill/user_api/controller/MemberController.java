@@ -12,7 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.*;
 
-import static com.zeroskill.user_api.util.Util.isValidEmail;
+import static com.zeroskill.common.util.Util.isValidEmail;
 
 @RestController
 @RequestMapping("/api/v1/members")

@@ -2,11 +2,11 @@ package com.zeroskill.user_api.dto.request;
 
 import com.zeroskill.common.exception.BuytopiaException;
 import com.zeroskill.common.exception.ErrorType;
-import com.zeroskill.user_api.validation.Check;
+import com.zeroskill.common.validation.Check;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static com.zeroskill.user_api.util.Util.isValidEmail;
+import static com.zeroskill.common.util.Util.isValidEmail;
 
 public record MemberAvailabilityCheckRequest(
         String loginId,

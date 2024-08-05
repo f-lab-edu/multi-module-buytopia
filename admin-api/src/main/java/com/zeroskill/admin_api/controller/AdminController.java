@@ -1,5 +1,8 @@
 package com.zeroskill.admin_api.controller;
 
+import com.zeroskill.admin_api.dto.request.AdminRegistrationRequest;
+import com.zeroskill.admin_api.service.AdminService;
+import com.zeroskill.common.dto.AdminDto;
 import com.zeroskill.common.dto.response.ApiResponse;
 import com.zeroskill.common.entity.Admin;
 import com.zeroskill.common.repository.AdminRepository;
@@ -10,20 +13,22 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admins")
+@RequestMapping("/api/v1/admins")
 @RequiredArgsConstructor
 public class AdminController {
 
-    private final AdminRepository adminRepository;
+    private final AdminService adminService;
 
     @PostMapping
-    public void addAdmin(@RequestBody Admin admin) {
-        adminRepository.save(admin);
+    public void addAdmin(@RequestBody AdminRegistrationRequest request) {
+        request.check();
+        AdminDto adminDto = AdminRegistrationRequest.toAdminDto(request);
+        adminService.register(adminDto);
     }
 
     @GetMapping
     public ApiResponse<List<Admin>> getAllAdmins() {
-        List<Admin> admins = adminRepository.findAll();
+        List<Admin> admins = adminService.findAll();
         return new ApiResponse<>(null, null, admins);
     }
 }
