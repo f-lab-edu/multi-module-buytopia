@@ -3,7 +3,7 @@ package com.zeroskill.user_api.controller;
 import com.zeroskill.common.dto.TermDto;
 import com.zeroskill.user_api.dto.request.AgreeToTermsRequest;
 import com.zeroskill.user_api.dto.request.PurposeRequest;
-import com.zeroskill.user_api.dto.response.ApiResponse;
+import com.zeroskill.common.dto.response.ApiResponse;
 import com.zeroskill.user_api.service.TermService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

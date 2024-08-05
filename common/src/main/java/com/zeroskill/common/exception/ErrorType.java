@@ -1,4 +1,4 @@
-package com.zeroskill.user_api.exception;
+package com.zeroskill.common.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

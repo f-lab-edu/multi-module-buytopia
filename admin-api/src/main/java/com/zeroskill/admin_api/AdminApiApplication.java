@@ -3,9 +3,12 @@ package com.zeroskill.admin_api;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.zeroskill.common", "com.zeroskill.admin_api"})
+@ComponentScan(
+		basePackages = {"com.zeroskill.common", "com.zeroskill.admin_api"}
+)
 public class AdminApiApplication {
 
 	public static void main(String[] args) {

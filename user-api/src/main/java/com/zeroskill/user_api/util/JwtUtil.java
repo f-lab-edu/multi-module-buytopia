@@ -1,7 +1,7 @@
 package com.zeroskill.user_api.util;
 
-import com.zeroskill.user_api.exception.UserApiException;
-import com.zeroskill.user_api.exception.ErrorType;
+import com.zeroskill.common.exception.BuytopiaException;
+import com.zeroskill.common.exception.ErrorType;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -62,7 +62,7 @@ public class JwtUtil {
             Jwts.parser().setSigningKey(encodeSecretKey(secretKey)).parseClaimsJws(token);
             return true;
         } catch (Exception e) {
-            throw new UserApiException(ErrorType.AUTHENTICATION_FAILED, logger::error);
+            throw new BuytopiaException(ErrorType.AUTHENTICATION_FAILED, logger::error);
         }
     }
 

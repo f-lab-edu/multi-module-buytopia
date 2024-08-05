@@ -1,4 +1,4 @@
-package com.zeroskill.user_api.validation;
+package com.zeroskill.common.validation;
 
 public interface Check {
     boolean check();
