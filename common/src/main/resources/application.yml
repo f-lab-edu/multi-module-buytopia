@@ -1,9 +1,9 @@
 server:
-  port: 8088
+  port: 8089
 
 spring:
   application:
-    name: admin-api
+    name: common
   datasource:
     url: jdbc:mysql://localhost:3306/buytopia
     username: root

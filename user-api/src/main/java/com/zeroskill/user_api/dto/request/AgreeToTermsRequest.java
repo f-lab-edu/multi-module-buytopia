@@ -1,6 +1,6 @@
 package com.zeroskill.user_api.dto.request;
 
-import com.zeroskill.user_api.entity.TermId;
+import com.zeroskill.common.entity.TermId;
 import com.zeroskill.user_api.exception.UserApiException;
 import com.zeroskill.user_api.exception.ErrorType;
 import com.zeroskill.user_api.validation.Check;

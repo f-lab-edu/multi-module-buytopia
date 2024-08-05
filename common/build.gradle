@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+    id 'application'
+}
+
+application {
+    mainClassName = 'com.zeroskill.common.CommonApplication'
+}
+
+dependencies {
+    // 공통 의존성 외에 필요한 추가 의존성은 여기에 추가
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', 'src/main/generated']
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.getGeneratedSourceOutputDirectory().set(file('src/main/generated'))
+}

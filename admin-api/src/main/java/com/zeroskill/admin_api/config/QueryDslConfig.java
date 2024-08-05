@@ -1,4 +1,4 @@
-package com.zeroskill.user_api.config;
+package com.zeroskill.admin_api.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

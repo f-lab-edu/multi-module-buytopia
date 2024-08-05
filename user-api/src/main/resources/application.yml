@@ -5,14 +5,14 @@ spring:
   application:
     name: user-api
   datasource:
-    url: jdbc:mysql://localhost:3306/userapi
+    url: jdbc:mysql://localhost:3306/buytopia
     username: root
     password: zeroskill2400
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
-#          ddl-auto: update
+          ddl-auto: create
 #    show-sql: true
     properties:
       hibernate:

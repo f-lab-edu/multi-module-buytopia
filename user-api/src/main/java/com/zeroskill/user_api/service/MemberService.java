@@ -1,12 +1,12 @@
 package com.zeroskill.user_api.service;
 
-import com.zeroskill.user_api.dto.MemberDto;
+import com.zeroskill.common.dto.MemberDto;
 import com.zeroskill.user_api.dto.response.MemberRegistrationResponse;
-import com.zeroskill.user_api.entity.Address;
-import com.zeroskill.user_api.entity.Member;
+import com.zeroskill.common.entity.Address;
+import com.zeroskill.common.entity.Member;
 import com.zeroskill.user_api.exception.UserApiException;
 import com.zeroskill.user_api.exception.ErrorType;
-import com.zeroskill.user_api.repository.MemberRepository;
+import com.zeroskill.common.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
-import static com.zeroskill.user_api.dto.MemberDto.hashPassword;
+import static com.zeroskill.common.dto.MemberDto.hashPassword;
 
 @Service
 @RequiredArgsConstructor
