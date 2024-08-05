@@ -9,8 +9,8 @@ import org.hibernate.annotations.ColumnDefault;
 
 import java.util.List;
 
-@Getter
 @Entity
+@Getter
 @NoArgsConstructor
 public class Member {
     @Id
