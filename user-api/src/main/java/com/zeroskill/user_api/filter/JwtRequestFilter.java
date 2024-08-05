@@ -1,7 +1,7 @@
 package com.zeroskill.user_api.filter;
 
-import com.zeroskill.user_api.exception.UserApiException;
-import com.zeroskill.user_api.exception.ErrorType;
+import com.zeroskill.common.exception.BuytopiaException;
+import com.zeroskill.common.exception.ErrorType;
 import com.zeroskill.user_api.service.VerificationTokenService;
 import com.zeroskill.user_api.util.JwtUtil;
 import jakarta.servlet.FilterChain;
@@ -47,7 +47,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if (loginId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             if (verificationTokenService.isTokenNotInWhiteList(jwt)) {
-                throw new UserApiException(ErrorType.AUTHENTICATION_FAILED, logger::error);
+                throw new BuytopiaException(ErrorType.AUTHENTICATION_FAILED, logger::error);
             }
 
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(loginId);

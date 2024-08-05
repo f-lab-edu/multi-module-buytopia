@@ -1,5 +1,6 @@
 package com.zeroskill.admin_api.controller;
 
+import com.zeroskill.common.dto.response.ApiResponse;
 import com.zeroskill.common.entity.Admin;
 import com.zeroskill.common.repository.AdminRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +17,13 @@ public class AdminController {
     private final AdminRepository adminRepository;
 
     @PostMapping
-    public ResponseEntity<Admin> addAdmin(@RequestBody Admin admin) {
-        Admin savedAdmin = adminRepository.save(admin);
-        return ResponseEntity.ok(savedAdmin);
+    public void addAdmin(@RequestBody Admin admin) {
+        adminRepository.save(admin);
     }
 
     @GetMapping
-    public ResponseEntity<List<Admin>> getAllAdmins() {
+    public ApiResponse<List<Admin>> getAllAdmins() {
         List<Admin> admins = adminRepository.findAll();
-        return ResponseEntity.ok(admins);
+        return new ApiResponse<>(null, null, admins);
     }
 }

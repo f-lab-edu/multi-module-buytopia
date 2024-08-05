@@ -1,5 +1,6 @@
 package com.zeroskill.admin_api.controller;
 
+import com.zeroskill.common.dto.response.ApiResponse;
 import com.zeroskill.common.entity.Category;
 import com.zeroskill.common.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +17,13 @@ public class CategoryController {
     private final CategoryRepository categoryRepository;
 
     @PostMapping
-    public ResponseEntity<Category> addCategory(@RequestBody Category category) {
-        Category savedCategory = categoryRepository.save(category);
-        return ResponseEntity.ok(savedCategory);
+    public void addCategory(@RequestBody Category category) {
+        categoryRepository.save(category);
     }
 
     @GetMapping
-    public ResponseEntity<List<Category>> getAllCategories() {
+    public ApiResponse<List<Category>> getAllCategories() {
         List<Category> categories = categoryRepository.findAll();
-        return ResponseEntity.ok(categories);
+        return new ApiResponse<>(null, null, categories);
     }
 }

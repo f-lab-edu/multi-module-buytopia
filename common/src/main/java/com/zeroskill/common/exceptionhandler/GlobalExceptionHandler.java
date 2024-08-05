@@ -1,7 +1,7 @@
-package com.zeroskill.user_api.exceptionhandler;
+package com.zeroskill.common.exceptionhandler;
 
-import com.zeroskill.user_api.dto.response.ApiResponse;
-import com.zeroskill.user_api.exception.UserApiException;
+import com.zeroskill.common.dto.response.ApiResponse;
+import com.zeroskill.common.exception.BuytopiaException;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @Order(1)
-    @ExceptionHandler(UserApiException.class)
-    public <T> ResponseEntity<ApiResponse<T>> handleUserApiException(UserApiException e) {
+    @ExceptionHandler(BuytopiaException.class)
+    public <T> ResponseEntity<ApiResponse<T>> handleUserApiException(BuytopiaException e) {
         return new ResponseEntity<>(ApiResponse.of(e.getCode(), e.getExtMsg()), e.getHttpStatusCode());
     }
 

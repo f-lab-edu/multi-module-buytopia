@@ -1,4 +1,4 @@
-package com.zeroskill.user_api.dto.response;
+package com.zeroskill.common.dto.response;
 
 public record ApiResponse<T>(String code, String message, T body) {
     public static <T> ApiResponse<T> of(T body) {
