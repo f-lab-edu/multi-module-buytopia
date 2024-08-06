@@ -24,6 +24,7 @@ public class BuytopiaException extends RuntimeException {
         this.httpStatusCode = errorType.getHttpStatusCode();
         this.LogLevel = null;
 
+
         String msg = String.format("Exception occurred: code=%s, msg=%s, httpStatus=%s",
                 errorType.getCode(), errorType.getIntMsg(), errorType.getHttpStatusCode());
         logger.accept(msg);
