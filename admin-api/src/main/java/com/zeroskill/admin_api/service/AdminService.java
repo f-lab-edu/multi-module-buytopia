@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.zeroskill.common.dto.AdminDto.hashPassword;
 
@@ -54,5 +55,9 @@ public class AdminService {
 
     public List<Admin> findAll() {
         return adminRepository.findAll();
+    }
+
+    public Optional<Admin> findById(Long id) {
+        return adminRepository.findById(id);
     }
 }

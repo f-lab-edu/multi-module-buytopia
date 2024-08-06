@@ -1,13 +1,16 @@
 package com.zeroskill.common.entity;
 
+import com.zeroskill.common.dto.DiscountDto;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "discount")
 @Getter
+@NoArgsConstructor
 public class Discount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,4 +30,17 @@ public class Discount {
     @ManyToOne
     @JoinColumn(name = "updated_by")
     private Admin updatedBy;
+
+    public Discount(DiscountType discountType, Long amount, LocalDate startDate, LocalDate endDate, Admin createdBy, Admin updatedBy) {
+        this.discountType = discountType;
+        this.amount = amount;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.createdBy = createdBy;
+        this.updatedBy = updatedBy;
+    }
+
+    public static Discount toEntity(DiscountDto dto, Admin creator, Admin updater) {
+        return new Discount(dto.discountType(), dto.amount(), dto.startDate(), dto.endDate(), creator, updater);
+    }
 }
