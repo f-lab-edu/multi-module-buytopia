@@ -1,10 +1,17 @@
 package com.zeroskill.admin_api.controller;
 
+import com.zeroskill.admin_api.dto.request.DiscountRegistrationRequest;
+import com.zeroskill.admin_api.service.AdminService;
+import com.zeroskill.admin_api.service.DiscountService;
+import com.zeroskill.common.dto.DiscountDto;
 import com.zeroskill.common.dto.response.ApiResponse;
+import com.zeroskill.common.entity.Admin;
 import com.zeroskill.common.entity.Discount;
-import com.zeroskill.common.repository.DiscountRepository;
+import com.zeroskill.common.exception.BuytopiaException;
+import com.zeroskill.common.exception.ErrorType;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,17 +20,25 @@ import java.util.List;
 @RequestMapping("/api/v1/discounts")
 @RequiredArgsConstructor
 public class DiscountController {
+    private static final Logger logger = LogManager.getLogger(DiscountController.class);
 
-    private final DiscountRepository discountRepository;
+    private final DiscountService discountService;
+    private final AdminService adminService;
 
     @PostMapping
-    public void addDiscount(@RequestBody Discount discount) {
-        discountRepository.save(discount);
+    public void addDiscount(@RequestBody DiscountRegistrationRequest request) {
+        request.check();
+        Admin admin = adminService.findById(request.createdBy()).orElseThrow(() -> new BuytopiaException(ErrorType.DATA_NOT_FOUND, logger::error));
+        if (admin == null) {
+            throw new BuytopiaException(ErrorType.DATA_NOT_FOUND, logger::error);
+        }
+        DiscountDto discountDto = DiscountRegistrationRequest.toDiscountDto(request);
+        discountService.register(discountDto);
     }
 
     @GetMapping
     public ApiResponse<List<Discount>> getAllDiscounts() {
-        List<Discount> discounts = discountRepository.findAll();
+        List<Discount> discounts = discountService.findAll();
         return new ApiResponse<>(null, null, discounts);
     }
 }

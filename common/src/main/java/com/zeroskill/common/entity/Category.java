@@ -1,15 +1,16 @@
 package com.zeroskill.common.entity;
 
-import com.zeroskill.common.dto.AdminDto;
 import com.zeroskill.common.dto.CategoryDto;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Table(name = "category")
 @Getter
+@NoArgsConstructor
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,11 +24,22 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private List<Product> products;
 
-    public Category(String name) {
+    @ManyToOne
+    @JoinColumn(name = "created_by")
+    private Admin createdBy;
+
+    @ManyToOne
+    @JoinColumn(name = "updated_by")
+    private Admin updatedBy;
+
+    public Category(String name, Category parentCategory, Admin creator, Admin updater) {
         this.name = name;
+        this.parentCategory = parentCategory;
+        this.createdBy = creator;
+        this.updatedBy = updater;
     }
 
-    public static Category toEntity(CategoryDto dto) {
-        return new Category(dto.name());
+    public static Category toEntity(CategoryDto dto, Category parentCategory, Admin creator, Admin updater) {
+        return new Category(dto.name(), parentCategory, creator, updater);
     }
 }
