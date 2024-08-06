@@ -16,7 +16,6 @@ import java.util.List;
 @RequestMapping("/api/v1/admins")
 @RequiredArgsConstructor
 public class AdminController {
-
     private final AdminService adminService;
 
     @PostMapping
