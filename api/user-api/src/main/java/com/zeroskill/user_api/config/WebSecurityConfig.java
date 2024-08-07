@@ -6,7 +6,9 @@ import com.zeroskill.user_api.service.VerificationTokenService;
 import com.zeroskill.user_api.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,14 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-    private final MemberService memberService;
-    private final JwtUtil jwtUtil;
-    private final VerificationTokenService verificationTokenService;
-
-    @Bean
-    public JwtRequestFilter jwtRequestFilter() {
-        return new JwtRequestFilter(jwtUtil, memberService, verificationTokenService);
-    }
+    private final JwtRequestFilter jwtRequestFilter;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -44,12 +39,16 @@ public class WebSecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> {
                     requests.requestMatchers(
-                            "/api/v1/members/**",
                             "/api/v1/auth/**",
                             "/api/v1/terms/**",
                             "/v3/api-docs/**",
                             "/swagger-ui/**",
                             "/swagger-ui.html"
+                    ).permitAll();
+                    requests.requestMatchers(
+                            HttpMethod.POST,
+                            "/api/v1/members/",
+                            "/api/v1/members/check/availability"
                     ).permitAll();
                     requests.anyRequest().authenticated();
 //                    requests.requestMatchers(HttpMethod.POST, "/api/articles").authenticated();
@@ -58,7 +57,7 @@ public class WebSecurityConfig {
                         sessionManagement ->
                                 sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .addFilterBefore(jwtRequestFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

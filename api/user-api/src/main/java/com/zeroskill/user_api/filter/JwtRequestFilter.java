@@ -2,6 +2,7 @@ package com.zeroskill.user_api.filter;
 
 import com.zeroskill.common.exception.BuytopiaException;
 import com.zeroskill.common.exception.ErrorType;
+import com.zeroskill.user_api.service.MemberService;
 import com.zeroskill.user_api.service.VerificationTokenService;
 import com.zeroskill.user_api.util.JwtUtil;
 import jakarta.servlet.FilterChain;
@@ -29,14 +30,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private static final Logger logger = LogManager.getLogger(JwtRequestFilter.class);
 
     private final JwtUtil jwtUtil;
-    private final UserDetailsService userDetailsService;
+    private final MemberService memberService;
     private final VerificationTokenService verificationTokenService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain chain)
             throws ServletException, IOException {
         final String authorizationHeader = request.getHeader("Authorization");
-
         String loginId = null;
         String jwt = null;
 
@@ -49,10 +49,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             if (verificationTokenService.isTokenNotInWhiteList(jwt)) {
                 throw new BuytopiaException(ErrorType.AUTHENTICATION_FAILED, logger::error);
             }
-
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(loginId);
+            UserDetails userDetails = this.memberService.loadUserByUsername(loginId);
 
             if (jwtUtil.validateToken(jwt)) {
+                System.out.println(userDetails.getUsername());
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken
