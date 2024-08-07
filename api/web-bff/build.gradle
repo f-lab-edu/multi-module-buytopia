@@ -6,7 +6,7 @@ plugins {
 }
 
 application {
-    mainClassName = 'com.zeroskill.gateway.GatewayApplication'
+    mainClassName = 'com.zeroskill.web-bff.WebBffApplication'
 }
 
 ext {

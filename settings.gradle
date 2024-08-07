@@ -2,10 +2,10 @@ rootProject.name = 'multi-module-buytopia'
 
 include ':api:admin-api'
 include ':api:user-api'
-include ':api:gateway'
+include ':api:web-bff'
 include ':core:common'
 
-project(':api:gateway').projectDir = file('api/gateway')
+project(':api:web-bff').projectDir = file('api/web-bff')
 project(':api:user-api').projectDir = file('api/user-api')
 project(':api:admin-api').projectDir = file('api/admin-api')
 project(':core:common').projectDir = file('core/common')

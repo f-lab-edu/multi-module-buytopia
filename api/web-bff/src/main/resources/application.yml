@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: gateway
+    name: web-bff
   datasource:
     url: jdbc:mysql://localhost:3306/buytopia
     username: root

@@ -1,10 +1,10 @@
-package com.zeroskill.gateway;
+package com.zeroskill.web_bff;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class GatewayApplicationTests {
+class WebBffApplicationTests {
 
     @Test
     void contextLoads() {
