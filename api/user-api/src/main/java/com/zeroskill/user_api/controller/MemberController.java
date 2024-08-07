@@ -1,6 +1,7 @@
 package com.zeroskill.user_api.controller;
 
 import com.zeroskill.common.dto.MemberDto;
+import com.zeroskill.common.dto.response.ApiResponse;
 import com.zeroskill.user_api.dto.request.MemberAvailabilityCheckRequest;
 import com.zeroskill.user_api.dto.request.MemberRegistrationRequest;
 import com.zeroskill.common.exception.BuytopiaException;
@@ -21,7 +22,12 @@ public class MemberController {
     private static final Logger logger = LogManager.getLogger(MemberController.class);
 
     private final MemberService memberService;
-    private final EmailService emailService;
+
+    @GetMapping("/{loginId}")
+    public ApiResponse<MemberDto> getMember(@PathVariable("loginId") String loginId) {
+        MemberDto memberDto = memberService.getMember(loginId);
+        return new ApiResponse<>(null, null, memberDto);
+    }
 
     @PostMapping({"", "/"})
     public void register(@RequestBody MemberRegistrationRequest request) {
@@ -39,18 +45,5 @@ public class MemberController {
         if (isDuplicate) {
             throw new BuytopiaException(ErrorType.DUPLICATE_ENTITY, logger::error);
         }
-    }
-
-    @PostMapping("/send/verification-email")
-    public void sendVerificationEmail(@RequestParam("email") String email) {
-        if (!isValidEmail(email)) {
-            throw new BuytopiaException(ErrorType.INVALID_EMAIL_FORMAT, logger::error);
-        }
-        emailService.sendVerificationEmail(email);
-    }
-
-    @GetMapping("/verify/email")
-    public void verifyEmail(@RequestParam("token") String token) {
-        emailService.verifyEmail(token);
     }
 }

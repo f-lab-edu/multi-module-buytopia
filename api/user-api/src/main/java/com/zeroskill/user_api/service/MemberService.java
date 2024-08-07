@@ -1,6 +1,8 @@
 package com.zeroskill.user_api.service;
 
+import com.zeroskill.common.dto.AddressDto;
 import com.zeroskill.common.dto.MemberDto;
+import com.zeroskill.common.entity.Grade;
 import com.zeroskill.user_api.dto.response.MemberRegistrationResponse;
 import com.zeroskill.common.entity.Address;
 import com.zeroskill.common.entity.Member;
@@ -66,5 +68,12 @@ public class MemberService implements UserDetailsService {
             throw new UsernameNotFoundException("존재하지 않는 사용자입니다.");
         }
         return new User(member.getLoginId(), member.getPassword(), new ArrayList<>());
+    }
+
+    public MemberDto getMember(String loginId) {
+        Member member = memberRepository.findByLoginId(loginId).orElseThrow(() -> new BuytopiaException(ErrorType.DATA_NOT_FOUND, logger::error));
+        AddressDto addressDto = new AddressDto(member.getAddress().getMainAddress(), member.getAddress().getSubAddress(), member.getAddress().getZipcode());
+        return new MemberDto(member.getId(), member.getLoginId(), member.getName(), member.getEmail(), null, member.getGrade(), addressDto);
+
     }
 }
