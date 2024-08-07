@@ -1,14 +1,9 @@
 package com.zeroskill.user_api.config;
 
 import com.zeroskill.user_api.filter.JwtRequestFilter;
-import com.zeroskill.user_api.service.MemberService;
-import com.zeroskill.user_api.service.VerificationTokenService;
-import com.zeroskill.user_api.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -39,16 +34,13 @@ public class WebSecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> {
                     requests.requestMatchers(
-                            "/api/v1/auth/**",
-                            "/api/v1/terms/**",
+                            "/external/api/v1/auth/**",
                             "/v3/api-docs/**",
                             "/swagger-ui/**",
                             "/swagger-ui.html"
                     ).permitAll();
                     requests.requestMatchers(
-                            HttpMethod.POST,
-                            "/api/v1/members/",
-                            "/api/v1/members/check/availability"
+                            "/internal/**"
                     ).permitAll();
                     requests.anyRequest().authenticated();
 //                    requests.requestMatchers(HttpMethod.POST, "/api/articles").authenticated();

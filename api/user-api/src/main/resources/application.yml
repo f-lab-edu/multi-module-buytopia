@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: user-api
+
+  main:
+    allow-bean-definition-overriding: true
+
   datasource:
     url: jdbc:mysql://localhost:3306/buytopia
     username: root

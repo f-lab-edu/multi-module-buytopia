@@ -1,4 +1,4 @@
-package com.zeroskill.user_api.controller;
+package com.zeroskill.user_api.controller.internal;
 
 import com.zeroskill.common.dto.MemberDto;
 import com.zeroskill.common.dto.response.ApiResponse;
@@ -6,17 +6,14 @@ import com.zeroskill.user_api.dto.request.MemberAvailabilityCheckRequest;
 import com.zeroskill.user_api.dto.request.MemberRegistrationRequest;
 import com.zeroskill.common.exception.BuytopiaException;
 import com.zeroskill.common.exception.ErrorType;
-import com.zeroskill.user_api.service.EmailService;
 import com.zeroskill.user_api.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.*;
 
-import static com.zeroskill.common.util.Util.isValidEmail;
-
 @RestController
-@RequestMapping("/api/v1/members")
+@RequestMapping("/internal/api/v1/members")
 @RequiredArgsConstructor
 public class MemberController {
     private static final Logger logger = LogManager.getLogger(MemberController.class);

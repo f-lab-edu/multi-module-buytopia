@@ -1,4 +1,4 @@
-package com.zeroskill.user_api.controller;
+package com.zeroskill.user_api.controller.external;
 
 import com.zeroskill.common.exception.BuytopiaException;
 import com.zeroskill.user_api.dto.request.AuthRequest;
@@ -14,7 +14,6 @@ import com.zeroskill.user_api.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 import static com.zeroskill.common.util.Util.isValidEmail;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/external/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthController {
     private static final Logger logger = LogManager.getLogger(AuthController.class);
