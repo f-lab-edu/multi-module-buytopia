@@ -1,4 +1,4 @@
-package com.zeroskill.user_api.controller;
+package com.zeroskill.user_api.controller.internal;
 
 import com.zeroskill.common.dto.TermDto;
 import com.zeroskill.user_api.dto.request.AgreeToTermsRequest;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/terms")
+@RequestMapping("/internal/api/v1/terms")
 @RequiredArgsConstructor
 public class TermController {
 
