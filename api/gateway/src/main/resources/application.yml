@@ -1,0 +1,40 @@
+server:
+  port: 30000
+
+spring:
+  application:
+    name: gateway
+  main:
+    web-application-type: reactive
+    allow-bean-definition-overriding: true
+  cloud:
+    gateway:
+      routes:
+        - id: web_bff_route
+          uri: http://localhost:18080
+          predicates:
+            - Path=/web-bff/**
+          filters:
+            - RewritePath=/web-bff/(?<remaining>.*), /${remaining}
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      discovery:
+        locator:
+          enabled: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/buytopia
+    username: root
+    password: zeroskill2400
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+    #      ddl-auto: create
+    #    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty: DEBUG
