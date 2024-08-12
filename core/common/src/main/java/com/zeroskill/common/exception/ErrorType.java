@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatusCode;
 
-
 @Getter
 @AllArgsConstructor
 public enum ErrorType {
@@ -14,7 +13,8 @@ public enum ErrorType {
     DUPLICATE_ENTITY("D-01", "이미 존재하는 데이터입니다.", "이미 존재하는 데이터입니다.", HttpStatusCode.valueOf(400)),
     DATA_NOT_FOUND("D-02", "존재하지 않는 데이터입니다.", "존재하지 않는 데이터입니다.", HttpStatusCode.valueOf(404)),
     MISSING_REQUIRED_TERMS("DB-02", "필수 약관이 누락되었습니다.", "의미적 오류로 인해 처리가 불가능합니다.", HttpStatusCode.valueOf(422)),
-    AUTHENTICATION_FAILED("A-01", "인증에 실패했습니다.", "인증에 실패했습니다.", HttpStatusCode.valueOf(400));
+    AUTHENTICATION_FAILED("A-01", "인증에 실패했습니다.", "인증에 실패했습니다.", HttpStatusCode.valueOf(400)),
+    INTERNAL_SERVER_ERROR_EXCEPTION("F-01", "서버 내부에 오류가 발생했습니다.", "서버 내부에 오류가 발생했습니다.", HttpStatusCode.valueOf(500));
 
     private final String code;
     private final String intMsg;
@@ -24,6 +24,7 @@ public enum ErrorType {
 
 //V-01: 필드가 비어 있음 (Empty Field)
 //V-02: 이메일 형식이 잘못됨 (Invalid Email Format)
+
 //V-03: 비밀번호 불일치 (Password Mismatch)
 //V-04: 잘못된 형식 (Invalid Format)
 //V-05: 최대 길이 초과 (Max Length Exceeded)
