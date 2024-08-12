@@ -6,7 +6,7 @@ plugins {
 }
 
 application {
-	mainClassName = 'com.zeroskill.admin_api.AdminApiApplication'
+	mainClassName = 'com.zeroskill.admin-api.AdminApiApplication'
 }
 
 dependencies {
@@ -24,5 +24,6 @@ dependencies {
 	implementation 'com.sun.xml.bind:jaxb-impl:4.0.1'
 	implementation 'com.sun.xml.bind:jaxb-core:4.0.1'
 	implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
+
 	implementation project(':core:common')
 }
