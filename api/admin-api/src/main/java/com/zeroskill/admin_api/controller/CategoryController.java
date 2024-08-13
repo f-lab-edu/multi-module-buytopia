@@ -38,8 +38,11 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ApiResponse<List<Category>> getAllCategories() {
-        List<Category> categories = categoryService.findAll();
-        return new ApiResponse<>(null, null, categories);
+    public ApiResponse<List<CategoryDto>> getAllCategories() {
+        List<CategoryDto> categoryDtos = categoryService.findAll()
+                .stream()
+                .map(Category::of)
+                .toList();
+        return new ApiResponse<>(null, null, categoryDtos);
     }
 }

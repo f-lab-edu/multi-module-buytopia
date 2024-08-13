@@ -1,6 +1,7 @@
 package com.zeroskill.common.service;
 
 import com.zeroskill.common.dto.ProductDto;
+import com.zeroskill.common.dto.DiscountedProductDto;
 import com.zeroskill.common.entity.Admin;
 import com.zeroskill.common.entity.Category;
 import com.zeroskill.common.entity.Discount;
@@ -16,6 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -42,5 +44,27 @@ public class ProductService {
 
     public List<Product> findAll() {
         return productRepository.findAll();
+    }
+
+    private long calculateDiscountedPrice(long price, long discountRate) {
+        return price * (100 - discountRate) / 100;
+    }
+
+    public List<DiscountedProductDto> getAllDiscountedProduct(LocalDate date) {
+        return productRepository.findAllDiscountedProduct(date)
+                .stream()
+                .map(product -> new DiscountedProductDto(
+                        product.getId(),
+                        product.getName(),
+                        product.getDescription(),
+                        product.getPrice(),
+                        product.getDiscount() != null ? product.getDiscount().getAmount() : null,
+                        product.getDiscount() != null ? calculateDiscountedPrice(product.getPrice(), product.getDiscount().getAmount()) : product.getPrice(),
+                        product.getCategory().getId(),
+                        product.getCategory().getName(),
+                        product.getCategory().getParentCategory() != null ? product.getCategory().getParentCategory().getName() : null,
+                        product.getDiscount() != null ? product.getDiscount().getDiscountType() : null
+                ))
+                .toList();
     }
 }

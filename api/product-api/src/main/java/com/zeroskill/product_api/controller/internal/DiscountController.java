@@ -1,5 +1,6 @@
 package com.zeroskill.product_api.controller.internal;
 
+import com.zeroskill.common.dto.DiscountDto;
 import com.zeroskill.common.dto.response.ApiResponse;
 import com.zeroskill.common.entity.Discount;
 import com.zeroskill.common.service.DiscountService;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/discounts")
+@RequestMapping("/internal/api/v1/discounts")
 @RequiredArgsConstructor
 public class DiscountController {
     private static final Logger logger = LogManager.getLogger(DiscountController.class);
@@ -21,8 +22,11 @@ public class DiscountController {
     private final DiscountService discountService;
 
     @GetMapping
-    public ApiResponse<List<Discount>> getAllDiscounts() {
-        List<Discount> discounts = discountService.findAll();
-        return new ApiResponse<>(null, null, discounts);
+    public ApiResponse<List<DiscountDto>> getAllDiscounts() {
+        List<DiscountDto> discountDtos = discountService.findAll()
+                .stream()
+                .map(Discount::of)
+                .toList();
+        return new ApiResponse<>(null, null, discountDtos);
     }
 }
