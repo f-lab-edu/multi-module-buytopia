@@ -1,8 +1,8 @@
 package com.zeroskill.admin_api.controller;
 
 import com.zeroskill.admin_api.dto.request.DiscountRegistrationRequest;
-import com.zeroskill.admin_api.service.AdminService;
-import com.zeroskill.admin_api.service.DiscountService;
+import com.zeroskill.common.service.AdminService;
+import com.zeroskill.common.service.DiscountService;
 import com.zeroskill.common.dto.DiscountDto;
 import com.zeroskill.common.dto.response.ApiResponse;
 import com.zeroskill.common.entity.Admin;

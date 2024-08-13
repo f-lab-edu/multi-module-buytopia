@@ -1,8 +1,8 @@
 package com.zeroskill.admin_api.controller;
 
 import com.zeroskill.admin_api.dto.request.ProductRegistrationRequest;
-import com.zeroskill.admin_api.service.AdminService;
-import com.zeroskill.admin_api.service.ProductService;
+import com.zeroskill.common.service.AdminService;
+import com.zeroskill.common.service.ProductService;
 import com.zeroskill.common.dto.ProductDto;
 import com.zeroskill.common.dto.response.ApiResponse;
 import com.zeroskill.common.entity.Admin;
