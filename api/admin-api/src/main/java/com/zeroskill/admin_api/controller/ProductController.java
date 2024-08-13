@@ -39,8 +39,11 @@ public class ProductController {
     }
 
     @GetMapping
-    public ApiResponse<List<Product>> getAllProducts() {
-        List<Product> products = productService.findAll();
-        return new ApiResponse<>(null, null, products);
+    public ApiResponse<List<ProductDto>> getAllProducts() {
+        List<ProductDto> productDtos = productService.findAll()
+                .stream()
+                .map(Product::of)
+                .toList();
+        return new ApiResponse<>(null, null, productDtos);
     }
 }

@@ -43,4 +43,16 @@ public class Discount {
     public static Discount toEntity(DiscountDto dto, Admin creator, Admin updater) {
         return new Discount(dto.discountType(), dto.amount(), dto.startDate(), dto.endDate(), creator, updater);
     }
+
+    public static DiscountDto of(Discount discount) {
+        return new DiscountDto(
+                discount.getId(),
+                discount.getDiscountType(),
+                discount.getAmount(),
+                discount.getStartDate(),
+                discount.getEndDate(),
+                discount.getCreatedBy().getId(),
+                discount.getUpdatedBy().getId()
+        );
+    }
 }
