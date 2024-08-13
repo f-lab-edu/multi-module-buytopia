@@ -1,4 +1,4 @@
-package com.zeroskill.admin_api.service;
+package com.zeroskill.common.service;
 
 import com.zeroskill.common.dto.CategoryDto;
 import com.zeroskill.common.entity.Admin;

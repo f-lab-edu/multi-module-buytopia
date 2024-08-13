@@ -1,13 +1,11 @@
 package com.zeroskill.admin_api.controller;
 
 import com.zeroskill.admin_api.dto.request.AdminRegistrationRequest;
-import com.zeroskill.admin_api.service.AdminService;
+import com.zeroskill.common.service.AdminService;
 import com.zeroskill.common.dto.AdminDto;
 import com.zeroskill.common.dto.response.ApiResponse;
 import com.zeroskill.common.entity.Admin;
-import com.zeroskill.common.repository.AdminRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
