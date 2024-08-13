@@ -1,4 +1,4 @@
-package com.zeroskill.productapi;
+package com.zeroskill.product_api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
