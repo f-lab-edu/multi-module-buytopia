@@ -4,6 +4,7 @@ include ':api:gateway'
 include ':api:web-bff'
 include ':api:admin-api'
 include ':api:user-api'
+include ':api:product-api'
 include ':api:eureka-api'
 include ':core:common'
 
@@ -11,5 +12,6 @@ project(':api:gateway').projectDir = file('api/gateway')
 project(':api:web-bff').projectDir = file('api/web-bff')
 project(':api:user-api').projectDir = file('api/user-api')
 project(':api:admin-api').projectDir = file('api/admin-api')
+project(':api:product-api').projectDir = file('api/product-api')
 project(':api:eureka-api').projectDir = file('api/eureka-api')
 project(':core:common').projectDir = file('core/common')
