@@ -59,4 +59,6 @@ subprojects {
 	configurations {
 		all*.exclude module: 'spring-boot-starter-logging'
 	}
+
+	tasks.register("prepareKotlinBuildScriptModel"){}
 }
