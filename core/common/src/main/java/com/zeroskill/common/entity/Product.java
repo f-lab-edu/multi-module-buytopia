@@ -3,10 +3,12 @@ package com.zeroskill.common.entity;
 import com.zeroskill.common.dto.ProductDto;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "product")
 @Getter
+@NoArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,5 +44,19 @@ public class Product {
         this.discount = discount;
         this.createdBy = createdBy;
         this.updatedBy = updatedBy;
+    }
+
+    public static ProductDto of(Product product) {
+        return new ProductDto(
+                product.getId(),
+                product.getName(),
+                product.getDescription(),
+                product.getPrice(),
+                product.getQuantity(),
+                product.getCategory().getId(),
+                product.getDiscount().getId(),
+                product.getCreatedBy().getId(),
+                product.getUpdatedBy().getId()
+        );
     }
 }

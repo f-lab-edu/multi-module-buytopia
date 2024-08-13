@@ -42,4 +42,14 @@ public class Category {
     public static Category toEntity(CategoryDto dto, Category parentCategory, Admin creator, Admin updater) {
         return new Category(dto.name(), parentCategory, creator, updater);
     }
+
+    public static CategoryDto of(Category category) {
+        return new CategoryDto(
+                category.getId(),
+                category.getName(),
+                category.parentCategory.getId(),
+                category.getCreatedBy().getId(),
+                category.getUpdatedBy().getId()
+        );
+    }
 }

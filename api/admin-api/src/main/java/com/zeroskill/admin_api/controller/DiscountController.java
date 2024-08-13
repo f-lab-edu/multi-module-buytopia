@@ -37,8 +37,11 @@ public class DiscountController {
     }
 
     @GetMapping
-    public ApiResponse<List<Discount>> getAllDiscounts() {
-        List<Discount> discounts = discountService.findAll();
-        return new ApiResponse<>(null, null, discounts);
+    public ApiResponse<List<DiscountDto>> getAllDiscounts() {
+        List<DiscountDto> discountDtos = discountService.findAll()
+                .stream()
+                .map(Discount::of)
+                .toList();
+        return new ApiResponse<>(null, null, discountDtos);
     }
 }

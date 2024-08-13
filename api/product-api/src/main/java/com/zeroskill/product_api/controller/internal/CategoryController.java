@@ -1,5 +1,6 @@
 package com.zeroskill.product_api.controller.internal;
 
+import com.zeroskill.common.dto.CategoryDto;
 import com.zeroskill.common.dto.response.ApiResponse;
 import com.zeroskill.common.entity.Category;
 import com.zeroskill.common.service.CategoryService;
@@ -13,15 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/categories")
+@RequestMapping("/internal/api/v1/categories")
 @RequiredArgsConstructor
 public class CategoryController {
     private static final Logger logger = LogManager.getLogger(CategoryController.class);
 
     private final CategoryService categoryService;
+
     @GetMapping
-    public ApiResponse<List<Category>> getAllCategories() {
-        List<Category> categories = categoryService.findAll();
-        return new ApiResponse<>(null, null, categories);
+    public ApiResponse<List<CategoryDto>> getAllCategories() {
+        List<CategoryDto> categoryDtos = categoryService.findAll()
+                .stream()
+                .map(Category::of)
+                .toList();
+        return new ApiResponse<>(null, null, categoryDtos);
     }
 }
