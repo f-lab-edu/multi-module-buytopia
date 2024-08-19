@@ -28,6 +28,7 @@ public class CategoryService {
 
         Category category = null;
         if(dto.parentCategoryId() != null) {
+            // TODO: map을 이용해서 한줄로 만들어보기
             Category parentCategory = categoryRepository.findById(dto.parentCategoryId()).orElseThrow(() -> new BuytopiaException(ErrorType.DATA_NOT_FOUND, logger::error));
             category = Category.toEntity(dto, parentCategory, creator, updater);
         } else {

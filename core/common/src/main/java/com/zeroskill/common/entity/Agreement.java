@@ -26,7 +26,7 @@ public class Agreement {
     })
     private Term term;
 
-    private boolean agreed;
+    private Boolean agreed;
     private final LocalDateTime agreedDate;
 
     public Agreement(Member member, Term term) {

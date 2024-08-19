@@ -1,4 +1,4 @@
-package com.zeroskill.admin_api.controller;
+package com.zeroskill.admin_api.controller.internal;
 
 import com.zeroskill.admin_api.dto.request.DiscountRegistrationRequest;
 import com.zeroskill.common.service.AdminService;
@@ -20,6 +20,7 @@ import java.util.List;
 @RequestMapping("/api/v1/discounts")
 @RequiredArgsConstructor
 public class DiscountController {
+    // TODO: internal external 컨트롤러로 product-api를 만들기
     private static final Logger logger = LogManager.getLogger(DiscountController.class);
 
     private final DiscountService discountService;
