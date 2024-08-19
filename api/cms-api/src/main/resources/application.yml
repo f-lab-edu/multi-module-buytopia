@@ -1,0 +1,26 @@
+server:
+  port: 18084
+
+spring:
+  application:
+    name: cms-api
+  datasource:
+    url: jdbc:mysql://localhost:3306/buytopia
+    username: root
+    password: zeroskill2400
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+    #      ddl-auto: create
+    #    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+  output:
+    ansi:
+      enabled: ALWAYS
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
