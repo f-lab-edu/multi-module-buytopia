@@ -30,7 +30,7 @@ public class Member {
     private String password;
 
     @Column(name = "activated", columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean activated = false;
+    private Boolean activated = false;
 
     @ColumnDefault("'SILVER'")
     @Enumerated(EnumType.STRING)
