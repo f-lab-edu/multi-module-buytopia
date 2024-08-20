@@ -16,7 +16,7 @@ public record AgreementDto(
                 agreement.getMember().getLoginId(),
                 agreement.getTerm().getId().getTitle(),
                 agreement.getTerm().getId().getVersion(),
-                agreement.isAgreed(),
+                agreement.getAgreed(),
                 agreement.getAgreedDate()
         );
     }

@@ -17,8 +17,8 @@ public class Term {
     private TermId id;
     private LocalDateTime createdDate;
     private String content;
-    private boolean required;
-    private boolean isActive;
+    private Boolean required;
+    private Boolean isActive;
 
     @OneToMany(mappedBy = "term")
     private Set<TermPurpose> termPurposes;

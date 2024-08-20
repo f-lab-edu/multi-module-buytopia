@@ -1,4 +1,4 @@
-package com.zeroskill.admin_api.controller;
+package com.zeroskill.admin_api.controller.internal;
 
 import com.zeroskill.admin_api.dto.request.ProductRegistrationRequest;
 import com.zeroskill.common.service.AdminService;

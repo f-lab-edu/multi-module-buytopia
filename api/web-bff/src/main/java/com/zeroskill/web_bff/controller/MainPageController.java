@@ -1,7 +1,9 @@
 package com.zeroskill.web_bff.controller;
 
+import com.zeroskill.common.dto.BannerDto;
 import com.zeroskill.common.dto.DiscountedProductDto;
 import com.zeroskill.common.dto.response.ApiResponse;
+import com.zeroskill.web_bff.client.CmsApiClient;
 import com.zeroskill.web_bff.client.ProductApiClient;
 import com.zeroskill.web_bff.client.UserApiClient;
 import com.zeroskill.web_bff.dto.MainPageResponse;
@@ -20,6 +22,7 @@ public class MainPageController {
 
     private final UserApiClient userApiClient;
     private final ProductApiClient productApiClient;
+    private final CmsApiClient cmsApiClient;
 
     /**
      * {
@@ -53,7 +56,8 @@ public class MainPageController {
      */
     @GetMapping("/main-page")
     public ApiResponse<MainPageResponse> getMainPageData(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        ApiResponse<List<DiscountedProductDto>> response = productApiClient.getAllDiscountedProduct(LocalDate.from(date));
-        return new ApiResponse<>(null, null, new MainPageResponse(response.body()));
+        ApiResponse<List<BannerDto>> bannerResponse = cmsApiClient.getAllBanners();
+        ApiResponse<List<DiscountedProductDto>> discountResponse = productApiClient.getAllDiscountedProduct(LocalDate.from(date));
+        return new ApiResponse<>(null, null, new MainPageResponse(bannerResponse.body(), discountResponse.body()));
     }
 }
