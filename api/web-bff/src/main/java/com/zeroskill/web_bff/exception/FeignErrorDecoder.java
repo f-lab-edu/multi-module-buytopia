@@ -13,10 +13,23 @@ public class FeignErrorDecoder implements ErrorDecoder {
     @Override
     public Exception decode(String methodKey, Response response) {
 
-        return switch (response.status()) {
-            case 400 -> new BuytopiaException(ErrorType.DATA_NOT_FOUND, logger::error);
-            case 500 -> new BuytopiaException(ErrorType.INTERNAL_SERVER_ERROR_EXCEPTION, logger::error);
-            default -> new Exception(response.reason());
-        };
+        logger.error("Feign error occurred. MethodKey: {}, Response: {}", methodKey, response);
+
+        try {
+            return switch (response.status()) {
+                case 400 -> {
+                    yield new BuytopiaException(ErrorType.DATA_NOT_FOUND, logger::error);
+                }
+                case 500 -> {
+                    yield new BuytopiaException(ErrorType.INTERNAL_SERVER_ERROR_EXCEPTION, logger::error);
+                }
+                default -> {
+                    yield new Exception("Unexpected error: " + response.reason());
+                }
+            };
+        } catch (Exception e) {
+            logger.error("Exception occurred during Feign client error decoding", e);
+            throw e;  // 예외를 다시 던져서 호출 측에서 처리할 수 있도록 함
+        }
     }
 }
