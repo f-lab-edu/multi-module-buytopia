@@ -13,6 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class WebSecurityConfig {
     @Bean
+    @SuppressWarnings("squid:S4502")
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
         return httpSecurity
