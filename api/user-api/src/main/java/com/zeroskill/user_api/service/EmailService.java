@@ -39,7 +39,7 @@ public class EmailService {
                 () -> new BuytopiaException(ErrorType.DATA_NOT_FOUND, logger::error)
         );
 
-        if (!member.isActivated()) {
+        if (!member.getActivated()) {
             String token = verificationTokenService.createVerificationToken(member.getEmail());
             String link = "http://localhost:" + port + "/api/v1/auth/verify/email?token=" + token;
             sendEmail(member.getEmail(), "Verify Your Email", "Please click on the link to verify your email: " + link);
@@ -53,7 +53,7 @@ public class EmailService {
             Member member = memberRepository.findByEmail(email).orElseThrow(
                     () -> new BuytopiaException(ErrorType.DATA_NOT_FOUND, logger::error)
             );
-            if (!member.isActivated()) {
+            if (!member.getActivated()) {
                 member.activateAccount();
                 memberRepository.save(member);
                 return true;
