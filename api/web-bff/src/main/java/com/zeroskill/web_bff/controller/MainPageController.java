@@ -6,7 +6,7 @@ import com.zeroskill.common.dto.response.ApiResponse;
 import com.zeroskill.web_bff.client.CmsApiClient;
 import com.zeroskill.web_bff.client.ProductApiClient;
 import com.zeroskill.web_bff.client.UserApiClient;
-import com.zeroskill.web_bff.dto.MainPageResponse;
+import com.zeroskill.web_bff.dto.response.MainPageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;

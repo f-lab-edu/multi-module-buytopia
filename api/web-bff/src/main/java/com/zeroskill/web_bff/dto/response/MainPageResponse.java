@@ -1,4 +1,4 @@
-package com.zeroskill.web_bff.dto;
+package com.zeroskill.web_bff.dto.response;
 
 import com.zeroskill.common.dto.BannerDto;
 import com.zeroskill.common.dto.DiscountedProductDto;
