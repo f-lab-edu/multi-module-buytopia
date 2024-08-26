@@ -16,6 +16,12 @@ spring:
             - Path=/web-bff/**
           filters:
             - RewritePath=/web-bff/(?<remaining>.*), /${remaining}
+        - id: commerce-api-route
+          uri: lb://commerce-api
+          predicates:
+            - Path=/commerce-api/internal/api/v1/carts
+          filters:
+            - RewritePath=/commerce-api(?<segment>/.*), /${segment}
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
       discovery:
