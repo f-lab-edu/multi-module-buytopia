@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static com.zeroskill.common.exception.ErrorType.DATA_NOT_FOUND;
+import static com.zeroskill.common.exception.ErrorType.PRODUCT_OUT_OF_STOCK;
 
 @Service
 @RequiredArgsConstructor
@@ -38,6 +39,11 @@ public class CartService {
                 .map( productQuantityDTO -> {
                     Product product = productRepository.findById(productQuantityDTO.productId())
                             .orElseThrow(() -> new BuytopiaException(DATA_NOT_FOUND, logger::error));
+
+                    if (product.getQuantity() < productQuantityDTO.quantity()) {
+                        throw new BuytopiaException(PRODUCT_OUT_OF_STOCK, logger::error);
+                    }
+
                     return new CartItem(cart, product, productQuantityDTO.quantity());
                 })
                 .forEach(cart::addCartItem);

@@ -1,15 +1,22 @@
 package com.zeroskill.common.entity;
 
 import com.zeroskill.common.dto.ProductDto;
+import com.zeroskill.common.exception.BuytopiaException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import static com.zeroskill.common.exception.ErrorType.PRODUCT_OUT_OF_STOCK;
 
 @Entity
 @Table(name = "product")
 @Getter
 @NoArgsConstructor
 public class Product {
+    private static final Logger logger = LogManager.getLogger(Product.class);
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,7 +24,7 @@ public class Product {
     private String name;
     private String description;
     private Long price;
-    private Integer quantity;
+    private Long quantity;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -58,5 +65,17 @@ public class Product {
                 product.getCreatedBy().getId(),
                 product.getUpdatedBy().getId()
         );
+    }
+
+    public void reduceStock(Long quantity) {
+        if (this.quantity < quantity) {
+            throw new BuytopiaException(PRODUCT_OUT_OF_STOCK, logger::error);
+        }
+        this.quantity -= quantity;
+    }
+
+    // 재고를 증가시키는 메서드 (옵션)
+    public void increaseStock(Long quantity) {
+        this.quantity += quantity;
     }
 }

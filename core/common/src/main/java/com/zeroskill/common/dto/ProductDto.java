@@ -5,7 +5,7 @@ public record ProductDto(
         String name,
         String description,
         Long price,
-        Integer quantity,
+        Long quantity,
         Long categoryId,
         Long discountId,
         Long createdBy,

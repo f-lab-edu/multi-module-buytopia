@@ -1,4 +1,4 @@
-package com.zeroskill.commerce_api.controller.internal;
+package com.zeroskill.commerce_api.controller.external;
 
 import com.zeroskill.commerce_api.dto.request.AddProductToCartRequest;
 import com.zeroskill.common.service.CartService;
@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/internal/api/v1/carts")
+@RequestMapping("/external/api/v1/carts")
 @RequiredArgsConstructor
 public class CartController {
 
