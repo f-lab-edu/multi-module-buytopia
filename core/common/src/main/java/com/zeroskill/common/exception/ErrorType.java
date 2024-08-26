@@ -14,7 +14,9 @@ public enum ErrorType {
     DATA_NOT_FOUND("D-02", "존재하지 않는 데이터입니다.", "존재하지 않는 데이터입니다.", HttpStatusCode.valueOf(404)),
     MISSING_REQUIRED_TERMS("DB-02", "필수 약관이 누락되었습니다.", "의미적 오류로 인해 처리가 불가능합니다.", HttpStatusCode.valueOf(422)),
     AUTHENTICATION_FAILED("A-01", "인증에 실패했습니다.", "인증에 실패했습니다.", HttpStatusCode.valueOf(400)),
-    INTERNAL_SERVER_ERROR_EXCEPTION("F-01", "서버 내부에 오류가 발생했습니다.", "서버 내부에 오류가 발생했습니다.", HttpStatusCode.valueOf(500));
+    INTERNAL_SERVER_ERROR_EXCEPTION("F-01", "서버 내부에 오류가 발생했습니다.", "서버 내부에 오류가 발생했습니다.", HttpStatusCode.valueOf(500)),
+    PRODUCT_OUT_OF_STOCK("P-01", "재고가 충분하지 않습니다.", "재고가 충분하지 않습니다.", HttpStatusCode.valueOf(409)),
+    PAYMENT_FAILED("PMT-01", "결제에 실패했습니다.", "결제를 처리할 수 없습니다.", HttpStatusCode.valueOf(402));
 
     private final String code;
     private final String intMsg;
@@ -63,3 +65,9 @@ public enum ErrorType {
 //N-03: 패킷 손실 (Packet Loss)
 //N-04: 연결 시간 초과 (Connection Timeout)
 //N-05: 프로토콜 오류 (Protocol Error)
+//상품 관련 에러(Product Errors)
+//
+//P-01: 상품 재고 에러
+//결제 관련 에러(Payment Errors)
+//
+//PMT-01: 결제 실패 에러
