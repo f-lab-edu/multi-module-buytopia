@@ -9,7 +9,7 @@ public record DeliveryDto(
         Long deliveryId,
         DeliveryStatus status,
         String receiverName,
-        String address,
+        AddressDto addressDto,
         String phoneNumber,
         LocalDateTime deliveryDate
 ) {
@@ -19,7 +19,7 @@ public record DeliveryDto(
                 delivery.getId(),
                 delivery.getStatus(),
                 delivery.getReceiverName(),
-                delivery.getAddress(),
+                AddressDto.of(delivery.getAddress()),
                 delivery.getPhoneNumber(),
                 delivery.getDeliveryDate()
         );

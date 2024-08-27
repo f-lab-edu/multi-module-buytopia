@@ -20,11 +20,11 @@ public class Delivery {
     private DeliveryStatus status;
 
     private String receiverName;
-    private String address;
+    private Address address;
     private String phoneNumber;
     private LocalDateTime deliveryDate;
 
-    public Delivery(String receiverName, String address, String phoneNumber, DeliveryStatus deliveryStatus) {
+    public Delivery(String receiverName, Address address, String phoneNumber, DeliveryStatus deliveryStatus) {
         this.receiverName = receiverName;
         this.address = address;
         this.phoneNumber = phoneNumber;
@@ -34,7 +34,7 @@ public class Delivery {
     }
 
     // 생성 메서드
-    public static Delivery createDelivery(String receiverName, String address, String phoneNumber) {
+    public static Delivery createDelivery(String receiverName, Address address, String phoneNumber) {
         return new Delivery(receiverName, address, phoneNumber, DeliveryStatus.PENDING);
     }
 

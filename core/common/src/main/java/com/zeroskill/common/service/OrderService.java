@@ -24,9 +24,10 @@ public class OrderService {
     private final CartRepository cartRepository;
     private final PaymentService paymentService;
     private final DeliveryRepository deliveryRepository;
+    private final PaymentRepository paymentRepository;
 
     @Transactional
-    public OrderDto createOrderFromCart(Long memberId, String receiverName, String address, String phoneNumber) {
+    public OrderDto createOrderFromCart(Long memberId, String receiverName, String phoneNumber) {
         // 1. 장바구니 조회
         Cart cart = cartRepository.findByMemberId(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("Cart not found for member: " + memberId));
@@ -56,15 +57,20 @@ public class OrderService {
         }
 
         // 4. 배달 정보 생성 및 저장
+        Address address = member.getAddress();
         Delivery delivery = Delivery.createDelivery(receiverName, address, phoneNumber);
         deliveryRepository.save(delivery);
         order.assignDelivery(delivery);  // 연관 관계 메서드 사용
 
+        Long totalAmount = orderItems.stream().mapToLong(OrderItem::getOrderPrice).sum();
+        Payment payment = Payment.createPayment(PaymentMethod.CREDIT_CARD, totalAmount);
+        Payment savedPayment = paymentRepository.save(payment);  // Payment 엔티티를 먼저 저장
+
         // 5. 주문 저장
+        order.assignPayment(savedPayment);
         orderRepository.save(order);
 
         // 6. 결제 요청
-        Long totalAmount = orderItems.stream().mapToLong(OrderItem::getOrderPrice).sum();
         PaymentDto paymentDto = paymentService.processPayment(PaymentMethod.CREDIT_CARD, totalAmount);
 
         // 7. 결제 결과에 따른 주문 상태 업데이트
