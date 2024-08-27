@@ -37,6 +37,7 @@ public class Order {
     private Payment payment;
 
     public Order() {
+        this.status = OrderStatus.PENDING;
         this.orderDate = LocalDateTime.now();
     }
 
