@@ -66,6 +66,10 @@ public class Order {
         this.member = member;
     }
 
+    public void assignPayment(Payment payment) {
+        this.payment = payment;
+    }
+
     public void assignDelivery(Delivery delivery) {
         this.delivery = delivery;
     }
