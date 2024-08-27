@@ -67,9 +67,14 @@ public class OrderService {
         Long totalAmount = orderItems.stream().mapToLong(OrderItem::getOrderPrice).sum();
         PaymentDto paymentDto = paymentService.processPayment(PaymentMethod.CREDIT_CARD, totalAmount);
 
+        // 7. 결제 결과에 따른 주문 상태 업데이트
         if (paymentDto.paymentStatus() == PaymentStatus.COMPLETED) {
             order.markAsOrdered();  // 상태 변경을 위한 메서드 사용
             delivery.startDelivery();  // 결제 완료되면 배달 시작
+
+            // 8. 장바구니 비우기 (결제 성공 후)
+            cart.getItems().clear();  // 장바구니에서 모든 항목 제거
+            cartRepository.save(cart);  // 장바구니 상태 업데이트
         } else {
             order.markAsCancelled();  // 상태 변경을 위한 메서드 사용
             throw new BuytopiaException(ErrorType.PAYMENT_FAILED, logger::error);
