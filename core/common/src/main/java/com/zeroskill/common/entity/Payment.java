@@ -26,16 +26,21 @@ public class Payment {
 
     private LocalDateTime paymentDate;
 
-    public Payment(PaymentMethod paymentMethod, Long amount, PaymentStatus paymentStatus) {
+    @OneToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
+    public Payment(PaymentMethod paymentMethod, Order order, PaymentStatus paymentStatus) {
         this.paymentMethod = paymentMethod;
-        this.amount = amount;
+        this.amount = order.getOrderItems().stream().mapToLong(OrderItem::getOrderPrice).sum();
         this.paymentStatus = paymentStatus;
         this.paymentDate = LocalDateTime.now();
+        this.order = order;
     }
 
     // 생성 메서드
-    public static Payment createPayment(PaymentMethod method, Long amount) {
-        return new Payment(method, amount, PaymentStatus.PENDING);
+    public static Payment createPayment(PaymentMethod method, Order order) {
+        return new Payment(method, order, PaymentStatus.PENDING);
     }
 
     // 결제 성공
