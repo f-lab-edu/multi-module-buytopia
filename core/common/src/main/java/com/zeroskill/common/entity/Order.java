@@ -19,7 +19,6 @@ public class Order {
     @Id
     @UuidGenerator(style = UuidGenerator.Style.AUTO)
     @GeneratedValue
-    @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
     private LocalDateTime orderDate;
