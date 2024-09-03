@@ -2,19 +2,24 @@ package com.zeroskill.common.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "`order`")
 @Getter
+@NoArgsConstructor
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @UuidGenerator(style = UuidGenerator.Style.AUTO)
+    @GeneratedValue
+    private UUID id;
 
     private LocalDateTime orderDate;
 
@@ -36,16 +41,10 @@ public class Order {
     @JoinColumn(name = "payment_id", nullable = false)
     private Payment payment;
 
-    public Order() {
+    public Order(Member member) {
+        this.orderDate = LocalDateTime.now();
         this.status = OrderStatus.PENDING;
-        this.orderDate = LocalDateTime.now();
-    }
-
-    public Order(Member member, Delivery delivery, OrderStatus orderStatus) {
-        this.orderDate = LocalDateTime.now();
-        this.status = orderStatus;
         this.member = member;
-        this.delivery = delivery;
     }
 
     // 연관 관계 메서드
@@ -54,12 +53,8 @@ public class Order {
         orderItem.assignToOrder(this);
     }
 
-    public static Order createOrder(Member member, Delivery delivery, List<OrderItem> orderItems) {
-        Order order = new Order(member, delivery, OrderStatus.ORDERED);
-        for (OrderItem orderItem : orderItems) {
-            order.addOrderItem(orderItem);
-        }
-        return order;
+    public static Order createOrder(Member member) {
+        return new Order(member);
     }
 
     public void assignMember(Member member) {
