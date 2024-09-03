@@ -5,10 +5,11 @@ import com.zeroskill.common.entity.OrderStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public record OrderDto(
-        Long orderId,
+        UUID orderId,
         Long memberId,
         LocalDateTime orderDate,
         OrderStatus status,

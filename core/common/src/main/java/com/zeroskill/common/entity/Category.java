@@ -18,7 +18,8 @@ public class Category {
 
     private String name;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "parent_category_id")
     private Category parentCategory;
 
     @OneToMany(mappedBy = "category")
