@@ -6,7 +6,6 @@ import com.zeroskill.common.exception.BuytopiaException;
 import com.zeroskill.common.repository.CartRepository;
 import com.zeroskill.common.repository.DeliveryRepository;
 import com.zeroskill.common.repository.OrderRepository;
-import com.zeroskill.common.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,8 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.zeroskill.common.exception.ErrorType.DATA_NOT_FOUND;
-import static com.zeroskill.common.exception.ErrorType.PRODUCT_OUT_OF_STOCK;
+import static com.zeroskill.common.exception.ErrorType.*;
 
 @Service
 @RequiredArgsConstructor
@@ -27,12 +25,15 @@ public class OrderService {
     private final CartRepository cartRepository;
     private final PaymentService paymentService;
     private final DeliveryRepository deliveryRepository;
-    private final PaymentRepository paymentRepository;
 
     public OrderDto createOrderFromCart(Long memberId, String receiverName, String phoneNumber) {
         // 1. 장바구니 조회
         Cart cart = cartRepository.findByMemberId(memberId)
                 .orElseThrow(() -> new BuytopiaException(DATA_NOT_FOUND, logger::error));
+
+        if(cart.getItems().isEmpty()) {
+            throw new BuytopiaException(CART_EMPTY, logger::error);
+        }
 
         // 2. 주문 생성
         Member member = cart.getMember();
@@ -49,7 +50,7 @@ public class OrderService {
             }
 
             // 재고 감소
-            product.reduceStock(cartItem.getQuantity());
+//            product.reduceStock(cartItem.getQuantity());
 
             // 주문 항목 생성
             OrderItem orderItem = OrderItem.createOrderItem(product, cartItem.getQuantity());
@@ -64,13 +65,11 @@ public class OrderService {
         deliveryRepository.save(delivery);
         order.assignDelivery(delivery);  // 연관 관계 메서드 사용
 
-        Long totalAmount = orderItems.stream().mapToLong(OrderItem::getOrderPrice).sum();
-        Payment payment = Payment.createPayment(PaymentMethod.CREDIT_CARD, totalAmount);
+        Payment payment = Payment.createPayment(PaymentMethod.CREDIT_CARD, order);
 
         // 5. 주문 저장
         order.assignPayment(payment);
         Order savedOrder = orderRepository.save(order);
-        System.out.println(savedOrder.getId());
 
         // 6. 결제 요청
         paymentService.processPayment(payment);

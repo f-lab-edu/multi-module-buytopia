@@ -16,6 +16,7 @@ public enum ErrorType {
     AUTHENTICATION_FAILED("A-01", "인증에 실패했습니다.", "인증에 실패했습니다.", HttpStatusCode.valueOf(400)),
     INTERNAL_SERVER_ERROR_EXCEPTION("F-01", "서버 내부에 오류가 발생했습니다.", "서버 내부에 오류가 발생했습니다.", HttpStatusCode.valueOf(500)),
     PRODUCT_OUT_OF_STOCK("P-01", "재고가 충분하지 않습니다.", "재고가 충분하지 않습니다.", HttpStatusCode.valueOf(409)),
+    CART_EMPTY("P-02", "장바구니가 비어있습니다.", "장바구니가 비어있습니다.", HttpStatusCode.valueOf(400)), // 장바구니 비어 있음 에러 추가
     PAYMENT_FAILED("PMT-01", "결제에 실패했습니다.", "결제를 처리할 수 없습니다.", HttpStatusCode.valueOf(402));
 
     private final String code;
@@ -68,6 +69,7 @@ public enum ErrorType {
 //상품 관련 에러(Product Errors)
 //
 //P-01: 상품 재고 에러
+//P-02: 장바구니 비어있음 에러
 //결제 관련 에러(Payment Errors)
 //
 //PMT-01: 결제 실패 에러
