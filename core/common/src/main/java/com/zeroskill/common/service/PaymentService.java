@@ -10,8 +10,10 @@ import com.zeroskill.common.repository.CartRepository;
 import com.zeroskill.common.repository.OrderRepository;
 import com.zeroskill.common.repository.PaymentRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -21,18 +23,13 @@ import static com.zeroskill.common.exception.ErrorType.PRODUCT_OUT_OF_STOCK;
 import static com.zeroskill.common.util.UtilConstants.fromCode;
 
 @Service
+@RequiredArgsConstructor
 public class PaymentService {
     private static final Logger logger = LogManager.getLogger(PaymentService.class);
 
     private final PaymentRepository paymentRepository;
     private final OrderRepository orderRepository;
     private final CartRepository cartRepository;
-
-    public PaymentService(PaymentRepository paymentRepository, OrderRepository orderRepository, CartRepository cartRepository) {
-        this.paymentRepository = paymentRepository;
-        this.orderRepository = orderRepository;
-        this.cartRepository = cartRepository;
-    }
 
     @Transactional
     public void completePayment(Long paymentId) {
@@ -49,11 +46,25 @@ public class PaymentService {
     }
 
     @Transactional
+    @KafkaListener(topics = "${topics.payment-request}", groupId = "payment-group")
     public void processPayment(Payment payment) {
+        System.out.println("Processing payment: " + payment);
+
         // PENDING 상태로 결제 생성
+        boolean requestSuccess = sendPaymentRequestToGateway(payment);
 
         // 실제 결제 처리 로직을 여기에 추가 (예: 외부 결제 게이트웨이 통신)
-        // 예시로 결제가 항상 성공하는 시나리오
+        if (!requestSuccess) {
+            payment.failPayment();  // 결제 실패 상태로 변경
+            paymentRepository.save(payment);
+        } else {
+            // 결제 요청이 성공적으로 외부로 전송된 경우, 결제 상태는 콜백에서 처리
+            logger.info("Payment request sent successfully for paymentId: {}", payment.getId());
+        }
+    }
+
+    private boolean sendPaymentRequestToGateway(Payment payment) {
+        return true;
     }
 
     @Transactional

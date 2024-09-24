@@ -1,3 +1,4 @@
+version: '3'
 services:
   # mysql
   mysql:
@@ -21,9 +22,34 @@ services:
     volumes:
       - redis_data:/data
 
+  # zookeeper
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: buytopia-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181  # Zookeeper 클라이언트 포트 설정
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+
+  # kafka
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092  # 또는 컨테이너 내부에서는 컨테이너 이름 사용
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper
+
 volumes:
   mysql_data:
   redis_data:
-
+  kafka_data:
 
 # 백업시에 mysqldump -u root -p userapi(db명) > C:\backup\userapi_backup.sql(파일위치)

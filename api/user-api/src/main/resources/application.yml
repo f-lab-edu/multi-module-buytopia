@@ -68,3 +68,7 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+
+topics:
+  payment-request: payment-request-topic
+  payment-completed: payment-completed-topic

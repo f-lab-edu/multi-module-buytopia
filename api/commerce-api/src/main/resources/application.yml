@@ -21,6 +21,14 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
+  kafka:
+    bootstrap-servers: localhost:9092  # Kafka 브로커 서버 주소
+    consumer:
+      group-id: payment-group  # 컨슈머 그룹 ID
+      auto-offset-reset: earliest
+      enable-auto-commit: true
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
 eureka:
   client:
@@ -29,3 +37,7 @@ eureka:
 
 logging.level:
   org.hibernate.type: trace
+
+topics:
+  payment-request: payment-request-topic
+  payment-completed: payment-completed-topic

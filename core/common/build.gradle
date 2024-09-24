@@ -12,7 +12,6 @@ application {
 dependencies {
     // 공통 의존성 외에 필요한 추가 의존성은 여기에 추가
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'org.apache.kafka:kafka-clients'
 }
-
-
-
