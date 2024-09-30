@@ -1,5 +1,6 @@
 package com.zeroskill.common.service;
 
+import com.zeroskill.common.dto.event.PaymentRequestEvent;
 import com.zeroskill.common.dto.request.PaymentResultRequest;
 import com.zeroskill.common.entity.Cart;
 import com.zeroskill.common.entity.Order;
@@ -47,8 +48,15 @@ public class PaymentService {
 
     @Transactional
     @KafkaListener(topics = "${topics.payment-request}", groupId = "payment-group")
-    public void processPayment(Payment payment) {
-        System.out.println("Processing payment: " + payment);
+    public void processPayment(PaymentRequestEvent paymentRequestEvent) {
+        if (paymentRequestEvent == null) {
+            // 로그 기록 및 예외 처리 또는 기본 동작 설정
+            System.err.println("null 들어옴");
+            return;  // 또는 적절한 예외를 던집니다.
+        }
+        logger.info("paymentRequestEvent: {}", paymentRequestEvent);
+        Payment payment = paymentRepository.findById(paymentRequestEvent.paymentId())
+                .orElseThrow(() -> new BuytopiaException(DATA_NOT_FOUND, logger::error));
 
         // PENDING 상태로 결제 생성
         boolean requestSuccess = sendPaymentRequestToGateway(payment);

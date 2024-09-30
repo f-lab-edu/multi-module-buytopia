@@ -6,6 +6,7 @@ import com.zeroskill.common.exception.BuytopiaException;
 import com.zeroskill.common.repository.CartRepository;
 import com.zeroskill.common.repository.DeliveryRepository;
 import com.zeroskill.common.repository.OrderRepository;
+import com.zeroskill.common.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,6 +29,7 @@ public class OrderService {
     private final PaymentService paymentService;
     private final DeliveryRepository deliveryRepository;
     private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final PaymentRepository paymentRepository;
 
     @Value("${topics.payment-request}")
     private String paymentRequestTopic;
@@ -72,13 +74,14 @@ public class OrderService {
 
         // 5. 주문 저장
         order.assignPayment(payment);
+        orderRepository.save(order);
+        paymentRepository.save(payment);
 
         // 6. 결제 요청
         PaymentRequestEvent paymentRequestEvent = new PaymentRequestEvent(payment.getId(), order.getId(), memberId);
+        logger.info("paymentRequestEvent: {}", paymentRequestEvent);
         kafkaTemplate.send(paymentRequestTopic, paymentRequestEvent);
 
         logger.info("Payment request event sent to Kafka on topic: {} for paymentId: {}", paymentRequestTopic, payment.getId());
-
-        orderRepository.save(order);
     }
 }
