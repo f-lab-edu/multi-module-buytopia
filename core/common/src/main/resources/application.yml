@@ -16,3 +16,25 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
+  kafka:
+    bootstrap-servers: localhost:9092  # Kafka 브로커 서버 주소
+    consumer:
+      group-id: payment-group  # 컨슈머 그룹 ID
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "*"
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    listener:
+      missing-topics-fatal: false
+      concurrency: 3  # 컨슈머 동시 처리 스레드 수
+
+topics:
+  payment-request: payment-request-topic
+  payment-completed: payment-completed-topic
