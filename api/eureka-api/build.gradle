@@ -6,7 +6,7 @@ plugins {
 }
 
 application {
-    mainClassName = 'com.zeroskill.eureka-api.EurekaApplication'
+    mainClassName = 'com.zeroskill.eureka_api.EurekaApiApplication'
 }
 
 dependencies {
@@ -17,6 +17,14 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+}
+
+springBoot {
+    mainClass = 'com.zeroskill.eureka_api.EurekaApiApplication'  // 메인 클래스
+}
+
+bootJar {
+    enabled = true  // 실행 가능한 JAR 생성
 }
 
 dependencyManagement {

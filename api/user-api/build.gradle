@@ -38,3 +38,11 @@ dependencies {
 	implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
 	implementation project(':core:common')
 }
+
+springBoot {
+	mainClass = 'com.zeroskill.user_api.UserApiApplication'  // 메인 클래스
+}
+
+bootJar {
+	enabled = true  // 실행 가능한 JAR 생성
+}
