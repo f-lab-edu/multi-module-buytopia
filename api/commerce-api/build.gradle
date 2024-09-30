@@ -6,7 +6,7 @@ plugins {
 }
 
 application {
-    mainClassName = 'com.zeroskill.commerce-api.CommerceApiApplication'
+    mainClassName = 'com.zeroskill.commerce_api.CommerceApiApplication'
 }
 
 dependencies {
@@ -28,3 +28,10 @@ dependencies {
     implementation project(':core:common')
 }
 
+springBoot {
+    mainClass = 'com.zeroskill.commerce_api.CommerceApiApplication'  // 메인 클래스
+}
+
+bootJar {
+    enabled = true  // 실행 가능한 JAR 생성
+}

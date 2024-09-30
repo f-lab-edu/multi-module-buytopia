@@ -24,6 +24,14 @@ dependencies {
 	testImplementation 'io.projectreactor:reactor-test'
 }
 
+springBoot {
+	mainClass = 'com.zeroskill.gateway.GatewayApplication'  // 메인 클래스
+}
+
+bootJar {
+	enabled = true  // 실행 가능한 JAR 생성
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
