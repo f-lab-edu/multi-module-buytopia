@@ -1,0 +1,26 @@
+server:
+  port: 18080
+
+spring:
+  datasource:
+    url: jdbc:mysql://mysql:3306/buytopia?allowPublicKeyRetrieval=true&useSSL=false  # 도커 컨테이너에서 MySQL 사용
+    username: root
+    password: zeroskill2400
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  output:
+    ansi:
+      enabled: ALWAYS
+  main:
+    allow-bean-definition-overriding: true
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+  kafka:
+    bootstrap-servers: kafka:9093  # prod 환경에서는 docker-compose의 kafka를 사용
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-api:8761/eureka/  # 도커 내에서 Eureka 접속
+

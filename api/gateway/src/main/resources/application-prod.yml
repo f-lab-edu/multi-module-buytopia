@@ -1,0 +1,51 @@
+server:
+  port: 30000
+
+spring:
+  main:
+    web-application-type: reactive
+    allow-bean-definition-overriding: true
+  cloud:
+    gateway:
+      routes:
+        - id: web_bff_route
+          uri: lb://web-bff
+          predicates:
+            - Path=/web-bff/**
+          filters:
+            - RewritePath=/web-bff/(?<remaining>.*), /${remaining}
+        - id: commerce-api-route
+          uri: lb://commerce-api
+          predicates:
+            - Path=/commerce-api/**
+          filters:
+            - RewritePath=/commerce-api(?<segment>.*), /${segment}
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      discovery:
+        locator:
+          enabled: true
+  datasource:
+    url: jdbc:mysql://mysql:3306/buytopia?allowPublicKeyRetrieval=true&useSSL=false  # 도커 컨테이너에서 MySQL 사용
+    username: root
+    password: zeroskill2400
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+    #      ddl-auto: create
+    #    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+  kafka:
+    bootstrap-servers: kafka:9093  # prod 환경에서는 docker-compose의 kafka를 사용
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-api:8761/eureka/  # 도커 내에서 Eureka 접속
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty: DEBUG

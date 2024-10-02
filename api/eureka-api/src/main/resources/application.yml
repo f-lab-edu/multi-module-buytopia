@@ -1,19 +1,5 @@
-#실행 포트 지정
-server:
-  port: 8761
-
 spring:
   application:
     name: eureka-api
-  datasource:
-    url: jdbc:mysql://localhost:3306/buytopia
-    username: root
-    password: zeroskill2400
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-    register-with-eureka: false 	#유레카 레지스트리에 자기 자신을 등록하지 않겠다.
-    fetch-registry: false   		#레지스트리의 정보를 가저오지 않겠다.
+  profiles:
+    active: develop  # 기본으로 로컬 개발 환경에서 동작하게 함

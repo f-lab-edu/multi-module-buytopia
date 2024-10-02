@@ -1,0 +1,120 @@
+services:
+  # Eureka 서버
+  eureka-api:
+    build:
+      context: ./api/eureka-api  # Eureka 서버 Dockerfile 경로
+    container_name: eureka-api
+    ports:
+      - "8761:8761"
+    environment:
+      - EUREKA_SERVER_PORT=8761
+      - SPRING_PROFILES_ACTIVE=prod  # prod 프로파일로 실행
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://eureka-api:8761/actuator/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - buytopia-network
+
+  gateway:
+    build:
+      context: ./api/gateway
+    container_name: gateway
+    ports:
+      - "30000:30000"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    depends_on:
+      eureka-api:
+        condition: service_healthy
+    networks:
+      - buytopia-network
+
+  web-bff:
+    build:
+      context: ./api/web-bff
+    container_name: web-bff
+    ports:
+      - "18080:18080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    depends_on:
+      eureka-api:
+        condition: service_healthy
+    networks:
+      - buytopia-network
+
+  admin-api:
+    build:
+      context: ./api/admin-api
+    container_name: admin-api
+    ports:
+      - "18081:18081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    depends_on:
+      eureka-api:
+        condition: service_healthy
+    networks:
+      - buytopia-network
+
+  user-api:
+    build:
+      context: ./api/user-api
+    container_name: user-api
+    ports:
+      - "18082:18082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    depends_on:
+      eureka-api:
+        condition: service_healthy
+    networks:
+      - buytopia-network
+
+  product-api:
+    build:
+      context: ./api/product-api
+    container_name: product-api
+    ports:
+      - "18083:18083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    depends_on:
+      eureka-api:
+        condition: service_healthy
+    networks:
+      - buytopia-network
+
+  cms-api:
+    build:
+      context: ./api/cms-api
+    container_name: cms-api
+    ports:
+      - "18084:18084"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    depends_on:
+      eureka-api:
+        condition: service_healthy
+    networks:
+      - buytopia-network
+
+  commerce-api:
+    build:
+      context: ./api/commerce-api
+    container_name: commerce-api
+    ports:
+      - "18086:18086"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    depends_on:
+      eureka-api:
+        condition: service_healthy
+    networks:
+      - buytopia-network
+
+networks:
+  buytopia-network:
+    external: true  # 외부에서 이미 생성된 네트워크 사용

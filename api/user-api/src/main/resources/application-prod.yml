@@ -1,0 +1,74 @@
+server:
+  port: 18082
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+  datasource:
+    url: jdbc:mysql://mysql:3306/buytopia?allowPublicKeyRetrieval=true&useSSL=false  # 도커 컨테이너에서 MySQL 사용
+    username: root
+    password: zeroskill2400
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+    #          ddl-auto: create
+    #    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+  h2:
+    console:
+      enabled: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: zeroskill2400@gmail.com
+    password: ${MAIL_APP_KEY}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: zeroskill2400
+
+  output:
+    ansi:
+      enabled: ALWAYS
+
+  kafka:
+    bootstrap-servers: kafka:9093  # prod 환경에서는 docker-compose의 kafka를 사용
+
+
+logging:
+  config: classpath:log4j2.xml
+  level:
+    org:
+      hibernate:
+#        SQL: debug
+#        type: trace
+
+jwt:
+  secret: mySecretKey
+  access:
+    expiration: 3600000
+  refresh:
+    expiration: 604800000
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-api:8761/eureka/  # 도커 내에서 Eureka 접속
+
+topics:
+  payment-request: payment-request-topic
+  payment-completed: payment-completed-topic

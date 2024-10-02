@@ -1,21 +1,5 @@
-server:
-  port: 18080
-
 spring:
   application:
     name: web-bff
-  datasource:
-    url: jdbc:mysql://localhost:3306/buytopia
-    username: root
-    password: zeroskill2400
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  output:
-    ansi:
-      enabled: ALWAYS
-  main:
-    allow-bean-definition-overriding: true
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-
+  profiles:
+    active: develop  # 기본으로 로컬 개발 환경에서 동작하게 함
