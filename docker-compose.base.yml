@@ -1,0 +1,72 @@
+services:
+  # mysql
+  mysql:
+    image: mysql:latest
+    container_name: buytopia-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: zeroskill2400
+      MYSQL_DATABASE: buytopia
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - buytopia-network
+    healthcheck:
+      test: [ "CMD-SHELL", "mysqladmin ping -h localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # redis
+  redis:
+    image: redis:latest
+    container_name: buytopia-redis
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--appendonly", "yes", "--requirepass", "zeroskill2400"]
+    volumes:
+      - redis_data:/data
+    networks:
+      - buytopia-network
+
+  # zookeeper
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: buytopia-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    networks:
+      - buytopia-network
+
+  # kafka
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: buytopia-kafka
+    ports:
+      - "9092:9092"  # 외부에서 접근 가능하게 포트 매핑
+      - "9093:9093"  # 내부 리스너를 위한 포트 추가
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: INTERNAL_PLAINTEXT://kafka:9093,EXTERNAL_PLAINTEXT://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL_PLAINTEXT://kafka:9093,EXTERNAL_PLAINTEXT://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL_PLAINTEXT:PLAINTEXT,EXTERNAL_PLAINTEXT:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL_PLAINTEXT  # 내부 브로커 간 통신 리스너 설정
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper
+    networks:
+      - buytopia-network
+
+volumes:
+  mysql_data:
+  redis_data:
+  kafka_data:
+
+networks:
+  buytopia-network:
+    external: true  # 외부에서 이미 생성된 네트워크 사용

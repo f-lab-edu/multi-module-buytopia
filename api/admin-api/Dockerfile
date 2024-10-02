@@ -8,7 +8,7 @@ WORKDIR /app
 COPY build/libs/admin-api-0.0.1-SNAPSHOT.jar /app/app.jar
 
 # Step 4: Expose the port
-EXPOSE 8080
+EXPOSE 18081
 
 # Step 5: Run the JAR file
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]

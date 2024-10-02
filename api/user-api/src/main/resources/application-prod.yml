@@ -45,6 +45,9 @@ spring:
     ansi:
       enabled: ALWAYS
 
+  kafka:
+    bootstrap-servers: kafka:9093  # prod 환경에서는 docker-compose의 kafka를 사용
+
 
 logging:
   config: classpath:log4j2.xml

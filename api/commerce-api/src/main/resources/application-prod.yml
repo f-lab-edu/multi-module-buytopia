@@ -20,7 +20,7 @@ spring:
     ansi:
       enabled: ALWAYS
   kafka:
-    bootstrap-servers: kafka:9092  # Kafka 브로커 서버 주소
+    bootstrap-servers: kafka:9093  # Kafka 브로커 서버 주소
     consumer:
       group-id: payment-group  # 컨슈머 그룹 ID
       auto-offset-reset: earliest

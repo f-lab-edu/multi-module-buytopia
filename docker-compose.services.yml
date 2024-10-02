@@ -1,65 +1,4 @@
 services:
-  # mysql
-  mysql:
-    image: mysql:latest
-    container_name: buytopia-mysql
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: zeroskill2400
-      MYSQL_DATABASE: buytopia
-    volumes:
-      - mysql_data:/var/lib/mysql
-    networks:
-      - buytopia-network
-    healthcheck:
-      test: [ "CMD-SHELL", "mysqladmin ping -h localhost" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  # redis
-  redis:
-    image: redis:latest
-    container_name: buytopia-redis
-    ports:
-      - "6379:6379"
-    command: ["redis-server", "--appendonly", "yes", "--requirepass", "zeroskill2400"]
-    volumes:
-      - redis_data:/data
-    networks:
-      - buytopia-network
-
-  # zookeeper
-  zookeeper:
-    image: confluentinc/cp-zookeeper:latest
-    container_name: buytopia-zookeeper
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-    ports:
-      - "2181:2181"
-    networks:
-      - buytopia-network
-
-  # kafka
-  kafka:
-    image: confluentinc/cp-kafka:latest
-    container_name: buytopia-kafka
-    ports:
-      - "9092:9092"
-    environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    depends_on:
-      - zookeeper
-    networks:
-      - buytopia-network
-
   # Eureka 서버
   eureka-api:
     build:
@@ -70,11 +9,8 @@ services:
     environment:
       - EUREKA_SERVER_PORT=8761
       - SPRING_PROFILES_ACTIVE=prod  # prod 프로파일로 실행
-    depends_on:
-      mysql:
-        condition: service_healthy
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8761/actuator/health" ]
+      test: [ "CMD", "curl", "-f", "http://eureka-api:8761/actuator/health" ]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -86,12 +22,10 @@ services:
       context: ./api/gateway
     container_name: gateway
     ports:
-      - "30000:8080"
+      - "30000:30000"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
     depends_on:
-      mysql:
-        condition: service_healthy
       eureka-api:
         condition: service_healthy
     networks:
@@ -102,12 +36,10 @@ services:
       context: ./api/web-bff
     container_name: web-bff
     ports:
-      - "18080:8080"
+      - "18080:18080"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
     depends_on:
-      mysql:
-        condition: service_healthy
       eureka-api:
         condition: service_healthy
     networks:
@@ -118,12 +50,10 @@ services:
       context: ./api/admin-api
     container_name: admin-api
     ports:
-      - "18081:8080"
+      - "18081:18081"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
     depends_on:
-      mysql:
-        condition: service_healthy
       eureka-api:
         condition: service_healthy
     networks:
@@ -134,12 +64,10 @@ services:
       context: ./api/user-api
     container_name: user-api
     ports:
-      - "18082:8080"
+      - "18082:18082"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
     depends_on:
-      mysql:
-        condition: service_healthy
       eureka-api:
         condition: service_healthy
     networks:
@@ -150,12 +78,10 @@ services:
       context: ./api/product-api
     container_name: product-api
     ports:
-      - "18083:8080"
+      - "18083:18083"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
     depends_on:
-      mysql:
-        condition: service_healthy
       eureka-api:
         condition: service_healthy
     networks:
@@ -166,12 +92,10 @@ services:
       context: ./api/cms-api
     container_name: cms-api
     ports:
-      - "18084:8080"
+      - "18084:18084"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
     depends_on:
-      mysql:
-        condition: service_healthy
       eureka-api:
         condition: service_healthy
     networks:
@@ -182,25 +106,15 @@ services:
       context: ./api/commerce-api
     container_name: commerce-api
     ports:
-      - "18086:8080"
+      - "18086:18086"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
     depends_on:
-      mysql:
-        condition: service_healthy
       eureka-api:
         condition: service_healthy
     networks:
       - buytopia-network
 
-
-volumes:
-  mysql_data:
-  redis_data:
-  kafka_data:
-
 networks:
   buytopia-network:
-
-
-# 백업시에 mysqldump -u root -p userapi(db명) > C:\backup\userapi_backup.sql(파일위치)
+    external: true  # 외부에서 이미 생성된 네트워크 사용

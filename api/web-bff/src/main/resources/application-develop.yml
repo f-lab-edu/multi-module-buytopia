@@ -14,6 +14,8 @@ spring:
     allow-bean-definition-overriding: true
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
+  kafka:
+    bootstrap-servers: localhost:9092
 
 eureka:
   client:
