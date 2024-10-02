@@ -24,8 +24,6 @@ public class KafkaConfig {
 
     @Bean
     public ConsumerFactory<String, Payment> consumerFactory() {
-        System.out.println("===============================================================================================================");
-        System.out.println("bootstrapServers: " + bootstrapServers);
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "payment-group");
